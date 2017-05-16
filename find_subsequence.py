@@ -1,3 +1,26 @@
+def check_similars(substring, password):
+	for i, char in enumerate(substring):
+		print(char, password[i])
+		if char != password[i]:
+			print("RETURNING FAAAAAAALSE")
+			return False
+
+	return True
+
+
+def get_start_index(substring, password):
+	if len(substring) == 0:
+		return
+	for i, char in enumerate(password):
+		print(i, char)
+		if char == substring[0]:
+			print("THINGS ARE THE SAME")
+			if(check_similars(substring[1:], password[i+1:])):
+				return i 
+
+
+	return None
+
 
 
 def subsequence(pass1, pass2):
@@ -51,26 +74,44 @@ def substring(pass1, pass2):
 
 	substring = l_pass1[x_longest - longest: x_longest]
 
-	return substring
+	if len(substring) > 2:
+		start_index1 = get_start_index(substring, pass1)
+		start_index2 = get_start_index(substring, pass2)
+
+		return [substring, [(pass1, start_index1), (pass2, start_index2)]]
+	else:
+		return None
+
 
 
 if __name__ == "__main__":
-	s1 = "coolio"
-	s2 = "cool4io"
-	name1 = subsequence(s1, s2)
-	name2 = substring(s1, s2)
+	s1 = "llllgkgkgkg"
+	s2 = "ek55"
+	#name1 = subsequence(s1, s2)
+	test = substring(s1, s2)
+	if test is not None:
+		sub = test[0]
+		pass1_tup = test[1][0]
+		pass2_tup = test[1][1]
 
-	s1_prop1 = len(name1)/len(s1)
-	s1_prop2 = len(name2)/len(s1)
-
-	s2_prop1 = len(name1)/len(s2)
-	s2_prop2 = len(name2)/len(s2)
-
-
-	print("subsequence is", name2)
-	print("\n", s1, "subsequence proprtion", s1_prop2)
-	print("\n", s2, "subsequence proprtion", s2_prop2)
+		print("SUB", sub, "\n\n")
+		print("starting index of password 1", pass1_tup[1])
+		print("starting index of password 2", pass2_tup[1])
 
 
+		'''
+		s1_prop1 = len(name1)/len(s1)
+		s1_prop2 = len(name2)/len(s1)
+
+		s2_prop1 = len(name1)/len(s2)
+		s2_prop2 = len(name2)/len(s2)
+
+
+		print("subsequence is", name2)
+		print("\n", s1, "subsequence proprtion", s1_prop2)
+		print("\n", s2, "subsequence proprtion", s2_prop2)
+		'''
+	else:
+		print("there was no common subsequence")
 
 
