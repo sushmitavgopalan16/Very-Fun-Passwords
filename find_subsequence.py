@@ -1,8 +1,8 @@
 def check_similars(substring, password):
 	for i, char in enumerate(substring):
-		print(char, password[i])
+		# print(char, password[i])
 		if char != password[i]:
-			print("RETURNING FAAAAAAALSE")
+			# print("RETURNING FAAAAAAALSE")
 			return False
 
 	return True
@@ -12,11 +12,11 @@ def get_start_index(substring, password):
 	if len(substring) == 0:
 		return
 	for i, char in enumerate(password):
-		print(i, char)
+		#print(i, char)
 		if char == substring[0]:
-			print("THINGS ARE THE SAME")
+			# print("THINGS ARE THE SAME")
 			if(check_similars(substring[1:], password[i+1:])):
-				return i 
+				return i
 
 
 	return None
@@ -24,7 +24,7 @@ def get_start_index(substring, password):
 
 
 def subsequence(pass1, pass2):
-	#get lowercase for analysis 
+	#get lowercase for analysis
 	l_pass1 = pass1.lower()
 	l_pass2 = pass2.lower()
 
@@ -84,34 +84,32 @@ def substring(pass1, pass2):
 
 
 
-if __name__ == "__main__":
-	s1 = "llllgkgkgkg"
-	s2 = "ek55"
-	#name1 = subsequence(s1, s2)
-	test = substring(s1, s2)
-	if test is not None:
-		sub = test[0]
-		pass1_tup = test[1][0]
-		pass2_tup = test[1][1]
-
-		print("SUB", sub, "\n\n")
-		print("starting index of password 1", pass1_tup[1])
-		print("starting index of password 2", pass2_tup[1])
-
-
-		'''
-		s1_prop1 = len(name1)/len(s1)
-		s1_prop2 = len(name2)/len(s1)
-
-		s2_prop1 = len(name1)/len(s2)
-		s2_prop2 = len(name2)/len(s2)
-
-
-		print("subsequence is", name2)
-		print("\n", s1, "subsequence proprtion", s1_prop2)
-		print("\n", s2, "subsequence proprtion", s2_prop2)
-		'''
-	else:
-		print("there was no common subsequence")
-
-
+# if __name__ == "__main__":
+# 	s1 = "llllgkgkgkg"
+# 	s2 = "ek55"
+# 	#name1 = subsequence(s1, s2)
+# 	test = substring(s1, s2)
+# 	if test is not None:
+# 		sub = test[0]
+# 		pass1_tup = test[1][0]
+# 		pass2_tup = test[1][1]
+#
+# 		print("SUB", sub, "\n\n")
+# 		print("starting index of password 1", pass1_tup[1])
+# 		print("starting index of password 2", pass2_tup[1])
+#
+#
+# 		'''
+# 		s1_prop1 = len(name1)/len(s1)
+# 		s1_prop2 = len(name2)/len(s1)
+#
+# 		s2_prop1 = len(name1)/len(s2)
+# 		s2_prop2 = len(name2)/len(s2)
+#
+#
+# 		print("subsequence is", name2)
+# 		print("\n", s1, "subsequence proprtion", s1_prop2)
+# 		print("\n", s2, "subsequence proprtion", s2_prop2)
+# 		'''
+# 	else:
+# 		print("there was no common subsequence")
