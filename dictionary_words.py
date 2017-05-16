@@ -2,23 +2,103 @@
 # if some substring of >= 3 characters of the password is a dictionary word
 import enchant
 d = enchant.Dict("en_US")
+from nltk.tag import pos_tag
+
+from nltk.corpus import wordnet as wn
+nouns = {x.name().split('.', 1)[0] for x in wn.all_synsets('n')}
 
 def dictionary_word(string):
-    # here, my minimum substring length is 3
+    # here, my minimum substring length is 3 
+    # returns the longest substring
     rv = False
-    print(string)
+    substrings = []
+    #print(string)
     if d.check(string):
         rv = True
     for i in range(len(string)):
         for j in range(i-1,len(string)):
             substring = string[i:j]
             if j-i >= 3:
-                if d.check(substring):
+                if d.check(substring) and not substring.isdigit() :
                     rv = True
-                    print(substring)
-                    break;
-    return rv
+                    substrings.append(substring)
+                    #print(substring)
+    return rv, substrings
+
+def common_nouns(string):
+   if string in nouns:
+   	return True
+   return False 
+
+
+# trie implementation testing 
+
+import os
+import sys
+from sys import exit
+import tty
+import termios
+import fcntl
+import string
+
+def create_trie_node():
+
+    dictionary = {'count':0, 'final': False}
+    return dictionary
+
+def add_word(word,trie):
+
+    trie['count']+= 1
+    if len(word) == 0:
+        trie['final'] = True
+        return 
+        
+    # check if first character already exists
+    character = word[0]
+    rest_of_word = word[1:]
+    
+    if character in trie.keys():
+        # add the rest of the word to this node
+        add_word(rest_of_word,trie[character])
+
+    else:
+        # create new node
+        trie[character] = create_trie_node()
+        # add the rest of the word to this node
+        add_word(rest_of_word,trie[character])
+
+def is_word(word, trie):
+    rv = False
+
+    if len(word) == 0:
+        return rv
+
+    if word[0] not in trie.keys():
+        return rv 
+    #else:
+    # base case - word with one character
+
+    if len(word) == 1:
+        if trie[word]['final'] == True:
+            rv = True 
+            return rv
+        else:
+            return rv
+
+    # recursive call       
+    if len(word)>1:
+        character = word[0]
+        rest_of_word = word[1:]        
+        return is_word(rest_of_word,trie[character])
+
+dictionary = create_trie_node()
+for word in nouns:
+	add_word(word,dictionary)
+
 
 if __name__ == "__main__":
-    s = "gehasfsdfsstuffzzzzz"
-    print(str(dictionary_word(s)))
+	with open("test_passwords.txt", "r") as file:
+		for line in file:
+			output = dictionary_word(line)
+			if output[0]:
+				print(str(is_word(output[1][0],dictionary)))
