@@ -8,11 +8,9 @@ def all_possible_pairs(filename):
             passwords.append(line)
 
     password_pairs = []
-    for first_pass in passwords:
-        for second_pass in passwords:
-            if first_pass == second_pass:
-                continue
-            password_pairs.append((first_pass, second_pass))
+    for i in range(len(passwords)):
+        for j in range(i+1,len(passwords)):
+            password_pairs.append((passwords[i], passwords[j]))
 
     with open(('password_pairs.txt'), "w") as output:
         output.write('\n'.join('%s %s' % pair for pair in password_pairs))
