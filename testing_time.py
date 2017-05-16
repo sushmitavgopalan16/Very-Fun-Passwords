@@ -1,11 +1,18 @@
-# Go over list of passwords and generate a boolean that is True
-# if some substring of >= 3 characters of the password is a dictionary word
-import enchant
-d = enchant.Dict("en_US")
-from nltk.tag import pos_tag
+# trie implementation testing 
 
+import os
+import sys
+from sys import exit
+import tty
+import termios
+import fcntl
+import string
+import timeit 
+import enchant
 from nltk.corpus import wordnet as wn
-nouns = {x.name().split('.', 1)[0] for x in wn.all_synsets('n')}
+
+
+d = enchant.Dict("en_US")
 
 def dictionary_word(string):
     # here, my minimum substring length is 3 
@@ -25,29 +32,24 @@ def dictionary_word(string):
                     #print(substring)
     return rv, substrings
 
-def common_nouns(string):
-   if string in nouns:
-   	return True
-   return False 
+# extract longest dictionary word substrings from the test passwords file
+list_to_check = []
+with open("test_passwords.txt", "r") as file:
+        for line in file:
+            output = dictionary_word(line)
+            if output[0]:
+                output[1].sort(key = len, reverse = True)
+                list_to_check.append(output[1][0])
 
-
-# trie implementation testing 
-
-import os
-import sys
-from sys import exit
-import tty
-import termios
-import fcntl
-import string
+def create_list():
+    rv = {x.name().split('.', 1)[0] for x in wn.all_synsets('n')}
+    return rv
 
 def create_trie_node():
-
     dictionary = {'count':0, 'final': False}
     return dictionary
 
 def add_word(word,trie):
-
     trie['count']+= 1
     if len(word) == 0:
         trie['final'] = True
@@ -60,7 +62,6 @@ def add_word(word,trie):
     if character in trie.keys():
         # add the rest of the word to this node
         add_word(rest_of_word,trie[character])
-
     else:
         # create new node
         trie[character] = create_trie_node()
@@ -91,14 +92,40 @@ def is_word(word, trie):
         rest_of_word = word[1:]        
         return is_word(rest_of_word,trie[character])
 
-dictionary = create_trie_node()
-for word in nouns:
-	add_word(word,dictionary)
+nouns = create_list()
 
 
-if __name__ == "__main__":
-	with open("test_passwords.txt", "r") as file:
-		for line in file:
-			output = dictionary_word(line)
-			if output[0]:
-				print(str(is_word(output[1][0],dictionary)))
+def create_dictionary(master_list):
+    dictionary = create_trie_node()
+    for word in master_list:
+        add_word(word,dictionary)
+    return dictionary
+
+dictionary = create_dictionary(nouns)
+
+
+def common_nouns_list(string,nouns):
+    if string in nouns:
+   	    return True
+    return False 
+
+
+def full_list_implementation(list_of_words,nouns):
+    for word in list_of_words:
+        print(common_nouns_list(word,nouns))
+
+def full_trie_implementation(list_of_words, dictionary):
+    for word in list_of_words:
+        print(common_nouns_trie(word,dictionary))
+
+def common_nouns_trie(string,dictionary):
+    if dictionary != None:
+        if is_word(string,dictionary):
+            return True
+    return False 
+
+#if __name__ == "__main__":
+#    %timeit full_list_implementation(list_to_check, nouns)
+#    %timeit full_trie_implementation(list_to_check,dictionary)
+
+

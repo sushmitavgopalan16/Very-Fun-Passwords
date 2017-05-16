@@ -1,5 +1,6 @@
 from mrjob.job import MRJob
 import re
+from find_subsequence import substring
 
 WORD_RE = re.compile(r"[\w]+")
 
@@ -8,45 +9,25 @@ class MRPairDistances(MRJob):
     def mapper(self, _, line):
         for pair in line.split('\n'):
             first, second = pair.split()
-            distance = levenshtein(first, second)
-            yield (first, second), distance
+            result = substring(first, second)
+            if result is not None:
+                sub = result[0]
+                pass1 = result[1][0]
+                pass2 = result[1][1]
+                # print(type(pass1), pass1)
+                yield sub, pass1
+                yield sub, pass2
 
-    def reducer(self, pair, distances):
-        for distance in distances:
-            if distance < 5:
-                yield pair, distance
+    def reducer(self, sub, pairs):
+        make_list = list(pairs)
+        #flat_list = []
+        #for sublist in make_list:
+        #    for item in sublist:
+        #        flat_list.append(item)
+        print(make_list)
+        #unique_list = list(set(flat_list))
+        yield sub, make_list
 
-def call_counter(func):
-    def helper(*args, **kwargs):
-        helper.calls += 1
-        return func(*args, **kwargs)
-    helper.calls = 0
-    helper.__name__= func.__name__
-    return helper
-def memoize(func):
-    mem = {}
-    def memoizer(*args, **kwargs):
-        key = str(args) + str(kwargs)
-        if key not in mem:
-            mem[key] = func(*args, **kwargs)
-        return mem[key]
-    return memoizer
-@call_counter
-@memoize
-def levenshtein(s, t):
-    if s == "":
-        return len(t)
-    if t == "":
-        return len(s)
-    if s[-1] == t[-1]:
-        cost = 0
-    else:
-        cost = 1
-
-    res = min([levenshtein(s[:-1], t)+1,
-               levenshtein(s, t[:-1])+1,
-               levenshtein(s[:-1], t[:-1]) + cost])
-    return res
 
 if __name__ == '__main__':
     MRPairDistances.run()

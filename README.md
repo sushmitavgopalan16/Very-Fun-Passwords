@@ -4,7 +4,7 @@ Looking for trends and insights from `berzerk0`'s [repository of leaked password
 
 ### Useful Commands
 
-#### Calculate levenshtein distance between all possible pairs of passwords
+#### Finding substrings between all possible pairs of passwords
 * To create password_pairs.txt, which contains all possible pairs of passwords:
   * `python3 all_possible_pairs.py [file.txt]`
 * To run the MapReduce file with the created file:
