@@ -8,4 +8,4 @@ Looking for trends and insights from `berzerk0`'s [repository of leaked password
 * To create password_pairs.txt, which contains all possible pairs of passwords:
   * `python3 all_possible_pairs.py [file.txt]`
 * To run the MapReduce file with the created file:
-  * `python3 distance_between_pairs.py --jobconf mapreduce.job.reduces=1 password_pairs.txt`
+  * `python3 mr_substring.py --jobconf mapreduce.job.reduces=1 password_pairs.txt`
