@@ -78,7 +78,7 @@ def substring(pass1, pass2):
 		start_index1 = get_start_index(substring, pass1)
 		start_index2 = get_start_index(substring, pass2)
 
-		return [substring, [(pass1, start_index1), (pass2, start_index2)]]
+		return [substring, [[pass1, start_index1], [pass2, start_index2]]]
 	else:
 		return None
 
