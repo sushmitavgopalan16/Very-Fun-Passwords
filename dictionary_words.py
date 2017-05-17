@@ -25,6 +25,7 @@ def dictionary_word(string):
 	#print(string)
 	if d.check(string):
 		rv = True
+		substrings.append(string)
 	for i in range(len(string)):
 		for j in range(i-1,len(string)):
 			substring = string[i:j]
@@ -109,11 +110,14 @@ for word in nouns:
 
 
 if __name__ == "__main__":
+	output = dictionary_word("password")
+	print(output)
+	'''
 	with open("test_passwords.txt", "r") as file:
 		for line in file:
 			output = dictionary_word(line)
 			print(line, output)
-			'''
+
 			if output[0]:
 				print(str(is_word(output[1][0],dictionary)))
 			'''

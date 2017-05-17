@@ -25,17 +25,15 @@ class MRPairSubstrings(MRJob):
         print(sub, sub_dict)
         yield sub, sub_dict
 
-    def mapper_find_words(self, sub, passwords):
+    def mapper_find_words(self, sub, sub_dict):
         result = dictionary_word(sub)
+        sub_dict['word'] = result
+        yield sub, sub_dict
 
-        # if result is not None:
-
-
-    def mapper_walks(self, sub, passwords):
-        for password in passwords:
-            path = keyboard_walk(password[0])
-            if path is not None:
-                yield (sub, password[0]), path
+    def mapper_walks(self, sub, sub_dict):
+        path = keyboard_walk(sub)
+        sub_dict['walks'] = path
+        yield sub, sub_dict
 
     def steps(self):
         return [
