@@ -22,7 +22,6 @@ class MRPairSubstrings(MRJob):
 
     def reducer_find_substrings(self, sub, pairs):
         sub_dict = {"passwords": list(pairs)}
-        print(sub, sub_dict)
         yield sub, sub_dict
 
     def mapper_find_words(self, sub, sub_dict):
