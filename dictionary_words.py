@@ -1,11 +1,21 @@
 # Go over list of passwords and generate a boolean that is True
-# if some substring of >= 3 characters of the password is a dictionary word
+# if some substring of >= 3 characters of the password is a dictionary word\
+import os
+import sys
+from sys import exit
+import tty
+import termios
+import fcntl
+import string
+from find_subsequence import get_start_index, check_similars
+
+from nltk.corpus import wordnet as wn
+nouns = {x.name().split('.', 1)[0] for x in wn.all_synsets('n')}
+
 import enchant
 d = enchant.Dict("en_US")
 from nltk.tag import pos_tag
 
-from nltk.corpus import wordnet as wn
-nouns = {x.name().split('.', 1)[0] for x in wn.all_synsets('n')}
 
 def dictionary_word(string):
     # here, my minimum substring length is 3 
@@ -23,7 +33,14 @@ def dictionary_word(string):
                     rv = True
                     substrings.append(substring)
                     #print(substring)
-    return rv, substrings
+    
+    sub_indices = []
+
+    for sub in substrings:
+    	start_i = get_start_index(sub, string)
+    	sub_indices.append([sub, start_i])
+
+    return rv, sub_indices
 
 def common_nouns(string):
    if string in nouns:
@@ -32,14 +49,6 @@ def common_nouns(string):
 
 
 # trie implementation testing 
-
-import os
-import sys
-from sys import exit
-import tty
-import termios
-import fcntl
-import string
 
 def create_trie_node():
 
@@ -101,4 +110,8 @@ if __name__ == "__main__":
 		for line in file:
 			output = dictionary_word(line)
 			if output[0]:
+				print(line, output[1])
+			'''
+			if output[0]:
 				print(str(is_word(output[1][0],dictionary)))
+			'''
