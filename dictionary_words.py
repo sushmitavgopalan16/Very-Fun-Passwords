@@ -18,29 +18,32 @@ from nltk.tag import pos_tag
 
 
 def dictionary_word(string):
-    # here, my minimum substring length is 3 
-    # returns the longest substring
-    rv = False
-    substrings = []
-    #print(string)
-    if d.check(string):
-        rv = True
-    for i in range(len(string)):
-        for j in range(i-1,len(string)):
-            substring = string[i:j]
-            if j-i >= 3:
-                if d.check(substring) and not substring.isdigit() :
-                    rv = True
-                    substrings.append(substring)
-                    #print(substring)
+	# here, my minimum substring length is 3 
+	# returns the longest substring
+	rv = False
+	substrings = []
+	#print(string)
+	if d.check(string):
+		rv = True
+	for i in range(len(string)):
+		for j in range(i-1,len(string)):
+			substring = string[i:j]
+			if j-i >= 3:
+				if d.check(substring) and not substring.isdigit() :
+					rv = True
+					substrings.append(substring)
+					#print(substring)
     
-    sub_indices = []
+	sub_indices = []
 
-    for sub in substrings:
-    	start_i = get_start_index(sub, string)
-    	sub_indices.append([sub, start_i])
+	for sub in substrings:
+		start_i = get_start_index(sub, string)
+		sub_indices.append([sub, start_i])
 
-    return rv, sub_indices
+	if rv:
+		return sub_indices
+	else:
+		return None
 
 def common_nouns(string):
    if string in nouns:
@@ -109,8 +112,7 @@ if __name__ == "__main__":
 	with open("test_passwords.txt", "r") as file:
 		for line in file:
 			output = dictionary_word(line)
-			if output[0]:
-				print(line, output[1])
+			print(line, output)
 			'''
 			if output[0]:
 				print(str(is_word(output[1][0],dictionary)))
