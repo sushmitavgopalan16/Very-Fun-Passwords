@@ -14,9 +14,9 @@ class MRPairSubstrings(MRJob):
             first, second = pair.split()
             result = substring(first, second)
             if result is not None:
-                sub = result[0]
-                pass1 = result[1][0]
-                pass2 = result[1][1]
+                sub = (result[0], result[1])
+                pass1 = result[2][0]
+                pass2 = result[2][1]
                 yield sub, pass1
                 yield sub, pass2
 
@@ -25,9 +25,14 @@ class MRPairSubstrings(MRJob):
         yield sub, sub_dict
 
     def mapper_find_words(self, sub, sub_dict):
-        result = dictionary_word(sub)
-        sub_dict['word'] = result
-        yield sub, sub_dict
+    	if sub[1] == True or sub[1] == None:
+	        result = dictionary_word(sub[0])
+	        sub_dict['word'] = result
+        if sub[1] == False of sub[1] == None:
+        	# must add call to number functions, find year, num sequence etc. 
+        	num_result = sub[0]
+        	sub_dict['number'] = num_result
+        yield sub[0], sub_dict
 
     def mapper_walks(self, sub, sub_dict):
         path = keyboard_walk(sub)
