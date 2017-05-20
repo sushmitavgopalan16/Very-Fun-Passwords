@@ -18,9 +18,16 @@ def get_start_index(substring, password):
 			if(check_similars(substring[1:], password[i+1:])):
 				return i
 
-
 	return None
 
+def check_alpha(substring):
+	is_alpha = None
+	if substring.isalpha():
+		is_alpha = True 
+	elif substring.isdigit():
+		is_alpha = False
+
+	return is_alpha
 
 
 def subsequence(pass1, pass2):
@@ -78,7 +85,9 @@ def substring(pass1, pass2):
 		start_index1 = get_start_index(substring, pass1)
 		start_index2 = get_start_index(substring, pass2)
 
-		return [substring, [[pass1, start_index1], [pass2, start_index2]]]
+		is_alpha = check_alpha(substring)
+
+		return [substring, is_alpha, [[pass1, start_index1], [pass2, start_index2]]]
 	else:
 		return None
 
