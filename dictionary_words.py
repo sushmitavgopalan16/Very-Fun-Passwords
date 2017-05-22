@@ -68,7 +68,7 @@ def build_dictionary_from_file(filename):
 	listx = []
 	with open(filename, "r") as file:
 		for line in file:
-			listx.append(line.split()[0])
+			listx.append(line.split()[0].lower())
 	dictionary = build_dictionary(listx)
 	#print("PRINTING TYPE OF OUTPUT FROM BUILD DICT FROM FILE ", type(dictionary))
 	return dictionary
