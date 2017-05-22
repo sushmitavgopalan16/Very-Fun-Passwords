@@ -4,6 +4,7 @@ import re
 from find_subsequence import substring
 from keyboard_walks import keyboard_walk
 from dictionary_words import dictionary_word
+from num_patterns import classify_num_string
 
 WORD_RE = re.compile(r"[\w]+")
 
@@ -28,10 +29,11 @@ class MRPairSubstrings(MRJob):
 		if sub[1] is True or sub[1] is None:
 			result = dictionary_word(sub[0])
 			sub_dict['word'] = result
-		if sub[1] is False or sub[1] is None:
+		if sub[1] is False:
 			# must add call to number functions, find year, num sequence etc. 
-			num_result = sub[0]
-			sub_dict['number'] = num_result
+			num_result = classify_num_string(sub[0])
+			if num_result:
+				sub_dict[num_result[0]] = num_result[1]
 		yield sub[0], sub_dict
 
 	def mapper_walks(self, sub, sub_dict):
