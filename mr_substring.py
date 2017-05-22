@@ -42,18 +42,16 @@ class MRPairSubstrings(MRJob):
 				commonnoun = common_noun(sub[0])
 				sub_dict['common_noun'] = commonnoun
 
-		# check if last name
-		if sub[1] is False or sub[1] is None:
 			lastname = last_names(sub[0])
 			sub_dict['last_name'] = lastname
 
 		# check if female name
-		if sub[1] is False or sub[1] is None:
+
 			femalename = female_names(sub[0])
 			sub_dict['female_name'] = femalename
 
 		# check if male name
-		if sub[1] is False or sub[1] is None:
+
 			malename = male_names(sub[0])
 			sub_dict['male_name'] = malename
 
