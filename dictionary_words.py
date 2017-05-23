@@ -16,7 +16,6 @@ def create_trie_node():
     return dictionary
 
 def add_word(word,trie):
-	#print("INSIDE ADD WORD TYPE TRIE ", type(trie))
 	trie['count']+= 1
 	if len(word) == 0:
 		trie['final'] = True
@@ -34,7 +33,6 @@ def add_word(word,trie):
 		add_word(rest_of_word,trie[character])
 
 def is_word(word, trie):
-	#print("THIS IS WHAT IS PASSED TO IS_WORD ",type(trie))
 	rv = False
 	# base case length = 0
 	if len(word) == 0:
@@ -42,7 +40,7 @@ def is_word(word, trie):
 
 	if word[0] not in trie.keys():
 		return rv
-		
+
 	if len(word) == 1:
 		if trie[word]['final']:
 			rv = True
@@ -80,13 +78,13 @@ list_all_words = {x.name().split('.', 1)[0] for x in wn.all_synsets()}
 all_words = build_dictionary(list_all_words)
 
 # LAST NAMES
-last_names_dict = build_dictionary_from_file("last_names.txt")
+last_names_dict = build_dictionary_from_file("text_files/last_names.txt")
 #
 # FEMALE NAMES
-female_names_dict = build_dictionary_from_file("female_first_names.txt")
+female_names_dict = build_dictionary_from_file("text_files/female_first_names.txt")
 
 # MALE NAMES
-male_names_dict = build_dictionary_from_file("male_first_names.txt")
+male_names_dict = build_dictionary_from_file("text_files/male_first_names.txt")
 
 def dictionary_word(word):
 	global all_words
