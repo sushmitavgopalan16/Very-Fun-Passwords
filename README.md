@@ -13,7 +13,7 @@ Looking for trends and insights from `berzerk0`'s [repository of leaked password
 #### Connecting to Google Cloud
 * Sushmita logs in and makes VM instance
   * We take note of external IP address and run this:
-    * ssh -i ~/.ssh/google-cloud-cs123 sushmitavgopolan@ExTERNAL-IP
+    * ssh -i ~/.ssh/google-cloud-cs123 sushmitavgopalan@ExTERNAL-IP
     * sudo mkdir /mnt/storage
     * sudo mount /dev/sdb /mnt/storage
     * sudo chmod 777 /mnt/storage
