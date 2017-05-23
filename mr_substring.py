@@ -3,8 +3,13 @@ from mrjob.step import MRStep
 import re
 from find_subsequence import substring
 from keyboard_walks import keyboard_walk
-from dictionary_words import dictionary_word
 from num_patterns import classify_num_string
+from nltk.corpus import wordnet as wn
+from dictionary_words import dictionary_word
+from dictionary_words import common_noun
+from dictionary_words import last_names
+from dictionary_words import female_names
+from dictionary_words import male_names
 
 WORD_RE = re.compile(r"[\w]+")
 
@@ -26,11 +31,34 @@ class MRPairSubstrings(MRJob):
 		yield sub, sub_dict
 
 	def mapper_find_words(self, sub, sub_dict):
+
+		# check if dictionary word
 		if sub[1] is True or sub[1] is None:
 			result = dictionary_word(sub[0])
 			sub_dict['word'] = result
+
+			# check if common noun
+			if sub_dict['word']:
+				commonnoun = common_noun(sub[0])
+				sub_dict['common_noun'] = commonnoun
+
+			lastname = last_names(sub[0])
+			sub_dict['last_name'] = lastname
+
+		# check if female name
+
+			femalename = female_names(sub[0])
+			sub_dict['female_name'] = femalename
+
+		# check if male name
+
+			malename = male_names(sub[0])
+			sub_dict['male_name'] = malename
+
+
+
 		if sub[1] is False:
-			# must add call to number functions, find year, num sequence etc. 
+			# must add call to number functions, find year, num sequence etc.
 			num_result = classify_num_string(sub[0])
 			if num_result:
 				sub_dict[num_result[0]] = num_result[1]
