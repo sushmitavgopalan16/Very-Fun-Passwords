@@ -4,9 +4,9 @@ def all_possible_pairs(filename):
 
     with open(('password_pairs.txt'), "w") as output:
         with open(filename, "r") as first_file:
-            for first in first_file.readlines():
+            for first in first_file:
                 with open(filename, "r") as second_file:
-                    for second in second_file.readlines():
+                    for second in second_file:
                         first = first.strip()
                         second = second.strip()
                         pair = first + ' ' + second + '\n'
