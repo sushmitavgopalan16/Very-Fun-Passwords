@@ -60,11 +60,8 @@ def single_move_walks(password):
 
         # don't check passwords that are not entirely letters
         if new_password != '' and new_password.isalpha():
-            if dictionary_word(new_password):k
+            if dictionary_word(new_password):
                 return True, direction, new_password
-
-    # the question is, do we use passwords or subsequences? and do i need to check
-    # using the windows method or just once for the whole string?
 
 
 def letters_flip():
