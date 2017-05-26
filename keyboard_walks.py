@@ -5,6 +5,7 @@
 import sys
 import enchant
 from keyboard_dictionary import *
+from dictionary_words import dictionary_word
 
 def keyboard_walk(password):
     global letters
@@ -43,8 +44,7 @@ def single_move_walks(password):
     directions = ['n', 'e', 's', 'w', 'm', 'b', 'd', 'a']
 
     # take in the password and check if it is a word
-    d = enchant.Dict("en_US")
-    if d.check(password):
+    if dictionary_word(password):
         return None
 
     # then if not, move the first letter N and then get the new moved password and
@@ -60,7 +60,7 @@ def single_move_walks(password):
 
         # don't check passwords that are not entirely letters
         if new_password != '' and new_password.isalpha():
-            if d.check(new_password):
+            if dictionary_word(new_password):k
                 return True, direction, new_password
 
     # the question is, do we use passwords or subsequences? and do i need to check
