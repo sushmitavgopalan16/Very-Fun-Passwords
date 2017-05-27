@@ -21,7 +21,7 @@ def all_possible_pairs(filename, start, end, ID):
 
 if __name__ == '__main__':
 	filename = sys.argv[1]
-	num_threads = sys.argv[2]
+	num_threads = int(sys.argv[2])
 
 	num_lines = sum(1 for line in open(filename))
 
