@@ -38,9 +38,9 @@ def find_sequence(num_string):
 				break
 
 	if seq:
-		return "Sequence"
+		return "sequence"
 	elif rep:
-		return "Repitition"
+		return "repitition"
 	else:
 		return None
 
@@ -52,7 +52,7 @@ def classify_num_string(num_string):
 	else:
 		date = find_date(num_string)
 		if date:
-			return ("Date", num_string)
+			return ("date", num_string)
 		else:
 			return None
 
