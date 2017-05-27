@@ -2,7 +2,7 @@ from mrjob.job import MRJob
 from mrjob.step import MRStep
 import re
 from find_subsequence import substring
-from keyboard_walks import keyboard_walk
+from keyboard_walks import keyboard_walk, single_move_walks
 from num_patterns import classify_num_string
 from nltk.corpus import wordnet as wn
 from dictionary_words import dictionary_word
@@ -70,6 +70,12 @@ class MRPairSubstrings(MRJob):
 				sub_dict[num_result[0]] = num_result[1]
 		yield sub[0], sub_dict
 
+	def mapper_single_move_walks(self, sub, sub_dict):
+		walk = single_move_walks(sub)
+		if walk:
+			sub_dict['single_move_walks'] = [walk[0], walk[1]]
+		yield sub, sub_dict
+
 	def mapper_walks(self, sub, sub_dict):
 		path = keyboard_walk(sub)
 		if path:
@@ -79,11 +85,14 @@ class MRPairSubstrings(MRJob):
 
 		yield None, sub_dict
 
+
+
 	def steps(self):
 		return [
 		  MRStep(mapper=self.mapper_find_substrings,
 				reducer=self.reducer_find_substrings),
 		  MRStep(mapper=self.mapper_find_words),
+		  MRStep(mapper=self.mapper_single_move_walks),
 		  MRStep(mapper=self.mapper_walks)]
 
 if __name__ == '__main__':

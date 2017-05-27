@@ -61,7 +61,7 @@ def single_move_walks(password):
         # don't check passwords that are not entirely letters
         if new_password != '' and new_password.isalpha():
             if dictionary_word(new_password):
-                return True, direction, new_password
+                return [direction, new_password]
 
 
 def letters_flip():
