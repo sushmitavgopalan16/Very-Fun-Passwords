@@ -38,27 +38,30 @@ class MRPairSubstrings(MRJob):
 		# check if dictionary word
 		if sub[1] is True or sub[1] is None:
 			result = dictionary_word(sub[0])
-			sub_dict['word'] = result
+			if result:
+				sub_dict['word'] = result
 
 			# check if common noun
-			if sub_dict['word']:
+			if result:
 				commonnoun = common_noun(sub[0])
-				sub_dict['common_noun'] = commonnoun
+				if commonnoun:
+					sub_dict['common_noun'] = commonnoun
 
 			lastname = last_names(sub[0])
-			sub_dict['last_name'] = lastname
+			if lastname:
+				sub_dict['last_name'] = lastname
 
 		# check if female name
 
 			femalename = female_names(sub[0])
-			sub_dict['female_name'] = femalename
+			if femalename:
+				sub_dict['female_name'] = femalename
 
 		# check if male name
 
 			malename = male_names(sub[0])
-			sub_dict['male_name'] = malename
-
-
+			if malename:
+				sub_dict['male_name'] = malename
 
 		if sub[1] is False:
 			# must add call to number functions, find year, num sequence etc.
@@ -69,10 +72,11 @@ class MRPairSubstrings(MRJob):
 
 	def mapper_walks(self, sub, sub_dict):
 		path = keyboard_walk(sub)
-		sub_dict['walks'] = path
+		if path:
+			sub_dict['walks'] = path
 
-		sub_dict['Subsequence'] = sub
-		
+		sub_dict['subsequence'] = sub
+
 		yield None, sub_dict
 
 	def steps(self):
