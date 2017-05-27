@@ -10,10 +10,13 @@ from dictionary_words import common_noun
 from dictionary_words import last_names
 from dictionary_words import female_names
 from dictionary_words import male_names
+from mrjob.protocol import JSONValueProtocol
 
 WORD_RE = re.compile(r"[\w]+")
 
 class MRPairSubstrings(MRJob):
+
+	OUTPUT_PROTOCOL = JSONValueProtocol
 
 	def mapper_find_substrings(self, _, line):
 		for pair in line.split('\n'):
@@ -67,7 +70,10 @@ class MRPairSubstrings(MRJob):
 	def mapper_walks(self, sub, sub_dict):
 		path = keyboard_walk(sub)
 		sub_dict['walks'] = path
-		yield sub, sub_dict
+
+		sub_dict['Subsequence'] = sub
+		
+		yield None, sub_dict
 
 	def steps(self):
 		return [
