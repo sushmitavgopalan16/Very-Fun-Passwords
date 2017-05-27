@@ -1,7 +1,7 @@
 
 
 def find_patterns(password, subs):
-	# password object = dictionary- has list of subsequences 
+	# password = name of password
 	# sub = tuple(name, starting index, flag)
 	parse_string = True
 	substrings = sorted(subs, key=lambda x: x[1])
