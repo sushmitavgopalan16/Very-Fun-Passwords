@@ -48,9 +48,16 @@ def find_sequence(num_string):
 
 
 def classify_num_string(num_string):
-	sequence_type = find_sequence(num_string)
-	if sequence_type:
-		return (sequence_type, num_string)
+	if num_string.isdigit():
+		sequence_type = find_sequence(num_string)
+		if sequence_type:
+			return (sequence_type, num_string)
+		else:
+			date = find_date(num_string)
+			if date:
+				return ("date", num_string)
+			else:
+				return None
 	else:
 		date = find_date(num_string)
 		if date:
