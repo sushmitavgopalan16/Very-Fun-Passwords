@@ -59,7 +59,7 @@ def single_move_walks(password):
                 break
 
         # don't check passwords that are not entirely letters
-        if new_password != '' and new_password.isalpha():
+        if len(new_password) > 2 and new_password.isalpha():
             if dictionary_word(new_password):
                 return [direction, new_password]
 
@@ -85,7 +85,7 @@ if __name__ == '__main__':
     #     for line in text_file.read().split():
     #         passwords.append(line)
 
-    passwords = ['ajkdg', 'mxhf']
+    passwords = ['ajkdg', 'mxhf', 'passw', 'ine']
 
     for password in passwords:
         # path, start_index = keyboard_walk(password, letters)
