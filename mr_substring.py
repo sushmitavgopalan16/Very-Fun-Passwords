@@ -63,8 +63,7 @@ class MRPairSubstrings(MRJob):
 			if malename:
 				sub_dict['male_name'] = malename
 
-		if sub[1] is False:
-			# must add call to number functions, find year, num sequence etc.
+		if sub[1] is False or sub[1] is None:
 			num_result = classify_num_string(sub[0])
 			if num_result:
 				sub_dict[num_result[0]] = num_result[1]
@@ -73,6 +72,7 @@ class MRPairSubstrings(MRJob):
 	def mapper_single_move_walks(self, sub, sub_dict):
 		walk = single_move_walks(sub)
 		if walk:
+			print(walk, walk[0], walk[1])
 			sub_dict['single_move_walks'] = [walk[0], walk[1]]
 		yield sub, sub_dict
 
