@@ -3,7 +3,6 @@
 
 # what about identical letters (ex. wwoo)
 import sys
-import enchant
 from keyboard_dictionary import *
 from dictionary_words import dictionary_word
 
