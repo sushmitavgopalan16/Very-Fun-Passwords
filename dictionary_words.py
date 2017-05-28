@@ -9,7 +9,7 @@ import termios
 import fcntl
 import string
 import timeit
-from python-nltk.corpus import wordnet as wn
+from nltk.corpus import wordnet as wn
 
 def create_trie_node():
     dictionary = {'count':0, 'final': False}
