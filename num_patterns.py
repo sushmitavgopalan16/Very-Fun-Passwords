@@ -1,5 +1,4 @@
 import datetime 
-import find_subsequence
 
 def find_date(num_string):
 	date_fmts = ('%Y%m%d', '%Y/%m/%d', '%Y%d%m', '%Y/%d/%m', '%m%d%Y','%m/%d/%Y', '%d%m%Y', '%d/%m/%Y', '%Y%m','%m%Y', '%Y', '%m%d', '%d%m', '%d%b%Y', '%d%B%Y', '%b%d%Y', '%B%d%Y', '%d%B', '%d%b', '%b%d', '%B%d') 
@@ -7,8 +6,9 @@ def find_date(num_string):
 	for i, format in enumerate(date_fmts):
 		try:
 			date = datetime.datetime.strptime(num_string, format)
-			if i > 7:
+			if '%b' in format:
 				is_date = True
+				break
 			elif date.year > 1700 and date.year < 2017:
 				is_date = True
 				break
@@ -64,14 +64,6 @@ def classify_num_string(num_string):
 			return ("date", num_string)
 		else:
 			return None
-
-
-
-
-if __name__ == "__main__":
-	result = find_date("12/12/2014")
-	print(result)
-
 
 
 
