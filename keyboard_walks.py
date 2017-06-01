@@ -1,7 +1,6 @@
 # ':n', ':e', ':s', ':w', ':m', ':b', ':d', ':a', ':N', ':E', ':S', ':W', ':M', ':B', ':D', ':A'
 # N, E, S, W, M(NE), B(NW), D(SE), A(SW)
 
-# what about identical letters (ex. wwoo)
 import sys
 from keyboard_dictionary import *
 from dictionary_words import dictionary_word
@@ -80,4 +79,3 @@ if __name__ == '__main__':
         # path, start_index = keyboard_walk(password, letters)
         # print(password, path, start_index)
         print(single_move_walks(password))
-
