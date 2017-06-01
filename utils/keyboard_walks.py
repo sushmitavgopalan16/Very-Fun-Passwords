@@ -1,11 +1,9 @@
 # ':n', ':e', ':s', ':w', ':m', ':b', ':d', ':a', ':N', ':E', ':S', ':W', ':M', ':B', ':D', ':A'
 # N, E, S, W, M(NE), B(NW), D(SE), A(SW)
 
-# what about identical letters (ex. wwoo)
 import sys
-import enchant
-from keyboard_dictionary import *
-from dictionary_words import dictionary_word
+from utils.keyboard_dictionary import *
+from utils.dictionary_words import dictionary_word
 
 def keyboard_walk(password):
     global letters
@@ -23,21 +21,9 @@ def keyboard_walk(password):
             current_letter = next_letter
 
         else:
-            if start_index is not None:
-                if len(path) < 2:
-                    path = ''
-                    start_index = None
-                else:
-                    break
+            return None
 
-    if len(path) < 2:
-        path = ''
-        start_index = None
-
-    if path != '':
-        return path, start_index
-    else:
-        return None
+    return path, start_index
 
 def single_move_walks(password):
     global reverse_letters
@@ -59,9 +45,11 @@ def single_move_walks(password):
                 break
 
         # don't check passwords that are not entirely letters
-        if new_password != '' and new_password.isalpha():
+        if len(new_password) == len(password) and new_password.isalpha():
             if dictionary_word(new_password):
                 return [direction, new_password]
+
+    return None
 
 
 def letters_flip():
@@ -85,7 +73,7 @@ if __name__ == '__main__':
     #     for line in text_file.read().split():
     #         passwords.append(line)
 
-    passwords = ['ajkdg', 'mxhf']
+    passwords = ['qazxcv', '12345h', 'ewbr', 'otr']
 
     for password in passwords:
         # path, start_index = keyboard_walk(password, letters)

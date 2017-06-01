@@ -1,16 +1,19 @@
+#!/usr/bin/env python3
+import re
+import sys
 from mrjob.job import MRJob
 from mrjob.step import MRStep
-import re
-from find_subsequence import substring
-from keyboard_walks import keyboard_walk, single_move_walks
-from num_patterns import classify_num_string
-from nltk.corpus import wordnet as wn
-from dictionary_words import dictionary_word
-from dictionary_words import common_noun
-from dictionary_words import last_names
-from dictionary_words import female_names
-from dictionary_words import male_names
 from mrjob.protocol import JSONValueProtocol
+from nltk.corpus import wordnet as wn
+
+from utils.find_subsequence import substring
+from utils.keyboard_walks import keyboard_walk, single_move_walks
+from utils.num_patterns import classify_num_string
+from utils.dictionary_words import dictionary_word
+from utils.dictionary_words import common_noun
+from utils.dictionary_words import last_names
+from utils.dictionary_words import female_names
+from utils.dictionary_words import male_names
 
 WORD_RE = re.compile(r"[\w]+")
 
@@ -20,8 +23,18 @@ class MRPairSubstrings(MRJob):
 
 	def mapper_find_substrings(self, _, line):
 		for pair in line.split('\n'):
-			first, second = pair.split()
-			result = substring(first, second)
+			try:
+				first, second = pair.split()
+			except:
+				print('[PAIR ERROR]', pair, file=sys.stderr)
+				continue
+
+			try:
+				result = substring(first, second)
+			except:
+				print('[PAIR ERROR]', pair, file=sys.stderr)
+				continue
+
 			if result is not None:
 				sub = (result[0], result[1])
 				pass1 = result[2][0]
@@ -63,8 +76,7 @@ class MRPairSubstrings(MRJob):
 			if malename:
 				sub_dict['male_name'] = malename
 
-		if sub[1] is False:
-			# must add call to number functions, find year, num sequence etc.
+		if sub[1] is False or sub[1] is None:
 			num_result = classify_num_string(sub[0])
 			if num_result:
 				sub_dict[num_result[0]] = num_result[1]
@@ -73,6 +85,7 @@ class MRPairSubstrings(MRJob):
 	def mapper_single_move_walks(self, sub, sub_dict):
 		walk = single_move_walks(sub)
 		if walk:
+			# print(walk, walk[0], walk[1])
 			sub_dict['single_move_walks'] = [walk[0], walk[1]]
 		yield sub, sub_dict
 
@@ -84,8 +97,6 @@ class MRPairSubstrings(MRJob):
 		sub_dict['subsequence'] = sub
 
 		yield None, sub_dict
-
-
 
 	def steps(self):
 		return [

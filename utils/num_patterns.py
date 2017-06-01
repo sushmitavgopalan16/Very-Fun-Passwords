@@ -1,13 +1,15 @@
-import datetime 
-import find_subsequence
+import datetime
 
 def find_date(num_string):
-	date_fmts = ('%Y%m%d', '%Y%d%m', '%m%d%Y', '%d%m%Y','%Y%m','%m%Y', '%Y', '%m%d', '%d%m') 
+	date_fmts = ('%Y%m%d', '%Y/%m/%d', '%Y%d%m', '%Y/%d/%m', '%m%d%Y','%m/%d/%Y', '%d%m%Y', '%d/%m/%Y', '%Y%m','%m%Y', '%Y', '%m%d', '%d%m', '%d%b%Y', '%d%B%Y', '%b%d%Y', '%B%d%Y', '%d%B', '%d%b', '%b%d', '%B%d')
 	is_date = False
-	for format in date_fmts:
+	for i, format in enumerate(date_fmts):
 		try:
 			date = datetime.datetime.strptime(num_string, format)
-			if date.year > 1700 and date.year < 2017:
+			if '%b' in format:
+				is_date = True
+				break
+			elif date.year > 1700 and date.year < 2017:
 				is_date = True
 				break
 		except ValueError:
@@ -46,30 +48,19 @@ def find_sequence(num_string):
 
 
 def classify_num_string(num_string):
-	sequence_type = find_sequence(num_string)
-	if sequence_type:
-		return (sequence_type, num_string)
+	if num_string.isdigit():
+		sequence_type = find_sequence(num_string)
+		if sequence_type:
+			return (sequence_type, num_string)
+		else:
+			date = find_date(num_string)
+			if date:
+				return ("date", num_string)
+			else:
+				return ("numbers", num_string)
 	else:
 		date = find_date(num_string)
 		if date:
 			return ("date", num_string)
 		else:
 			return None
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

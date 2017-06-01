@@ -23,7 +23,7 @@ def get_start_index(substring, password):
 def check_alpha(substring):
 	is_alpha = None
 	if substring.isalpha():
-		is_alpha = True 
+		is_alpha = True
 	elif substring.isdigit():
 		is_alpha = False
 
@@ -82,43 +82,16 @@ def substring(pass1, pass2):
 	substring = l_pass1[x_longest - longest: x_longest]
 
 	if len(substring) > 2:
-		start_index1 = get_start_index(substring, pass1)
-		start_index2 = get_start_index(substring, pass2)
+		start_index1 = get_start_index(substring, l_pass1)
+		start_index2 = get_start_index(substring, l_pass2)
 
 		is_alpha = check_alpha(substring)
 
-		return [substring, is_alpha, [[pass1, start_index1], [pass2, start_index2]]]
+		return [substring, is_alpha, [[l_pass1, start_index1], [l_pass2, start_index2]]]
 	else:
 		return None
 
 
-
-# if __name__ == "__main__":
-# 	s1 = "llllgkgkgkg"
-# 	s2 = "ek55"
-# 	#name1 = subsequence(s1, s2)
-# 	test = substring(s1, s2)
-# 	if test is not None:
-# 		sub = test[0]
-# 		pass1_tup = test[1][0]
-# 		pass2_tup = test[1][1]
-#
-# 		print("SUB", sub, "\n\n")
-# 		print("starting index of password 1", pass1_tup[1])
-# 		print("starting index of password 2", pass2_tup[1])
-#
-#
-# 		'''
-# 		s1_prop1 = len(name1)/len(s1)
-# 		s1_prop2 = len(name2)/len(s1)
-#
-# 		s2_prop1 = len(name1)/len(s2)
-# 		s2_prop2 = len(name2)/len(s2)
-#
-#
-# 		print("subsequence is", name2)
-# 		print("\n", s1, "subsequence proprtion", s1_prop2)
-# 		print("\n", s2, "subsequence proprtion", s2_prop2)
-# 		'''
-# 	else:
-# 		print("there was no common subsequence")
+if __name__ == "__main__":
+	thing = substring('Chelsea', 'chelsea')
+	print(thing)

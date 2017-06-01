@@ -78,13 +78,13 @@ list_all_words = {x.name().split('.', 1)[0] for x in wn.all_synsets()}
 all_words = build_dictionary(list_all_words)
 
 # LAST NAMES
-last_names_dict = build_dictionary_from_file("text_files/last_names.txt")
+last_names_dict = build_dictionary_from_file("./text_files/last_names.txt")
 #
 # FEMALE NAMES
-female_names_dict = build_dictionary_from_file("text_files/female_first_names.txt")
+female_names_dict = build_dictionary_from_file("./text_files/female_first_names.txt")
 
 # MALE NAMES
-male_names_dict = build_dictionary_from_file("text_files/male_first_names.txt")
+male_names_dict = build_dictionary_from_file("./text_files/male_first_names.txt")
 
 def dictionary_word(word):
 	global all_words
