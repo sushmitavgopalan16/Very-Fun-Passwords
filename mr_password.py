@@ -3,15 +3,16 @@ from mrjob.step import MRStep
 from mrjob.protocol import JSONValueProtocol
 from find_patterns import find_patterns
 
-
 class MRPasswords(MRJob):
 
 	INPUT_PROTOCOL = JSONValueProtocol
 	OUTPUT_PROTOCOL = JSONValueProtocol
 
 	def mapper_on_passwords(self, _, dictionary):
-		for password in dictionary['passwords']:	
-			if 'female_name' in dictionary:
+		for password in dictionary['passwords']:
+			if 'common_noun' in dictionary:
+				flag = 'proper noun'		
+			elif 'female_name' in dictionary:
 				flag = 'female name'
 			elif 'male_name' in dictionary:
 				flag = 'male name'
@@ -25,38 +26,76 @@ class MRPasswords(MRJob):
 				flag = 'date'
 			elif 'repitition' in dictionary:
 				flag = 'repitition'
+			elif 'numbers' in dictionary:
+				flag = 'numbers'
 			elif 'walks' in dictionary:
 				flag = 'keyboard walk'
+			elif 'single_move_walks' in dictionary:
+				flag = 'single move w'
 			else:
 				flag = None
 
-		yield password, (dictionary['subsequence'], password[1], flag)
+		yield password[0], (dictionary['subsequence'], password[1], flag)
 
 	def reducer_on_passwords(self, password, sub):
-		new_dict = {}
 		subsequences = list(sub)
+		'''
+		if len(subsequences) > 0:
+			new_dict['subsequences'] = []
+			new_dict['subsequences'].append(subsequences[0])
 
-		new_dict['subsequences'] = []
-		new_dict['subsequences'].append(subsequences[0])
+		new_dict['password'] = password[0]
+		'''
+		print(password, subsequences)
+		yield None, (password, subsequences)
 
-		new_dict['password'] = password
+	def mapper_get_patterns(self, _, pass_subs):
+		pattern = find_patterns(pass_subs[0], pass_subs[1])
+		if pass_subs[0] == 'chelsea123':
+			print('WE DOING CHELSEA PASSWORD')
+			print('chelsea pattern waaaaas', pattern)
+		#print('pattern found is', pattern, '\n')
+		'''
+		dictionary = {}
+		dictionary['password'] = pass_subs[0]
+		dictionary['subs'] = pass_subs[1]
+		dictionary['pattern'] = pattern
+		'''
 
-		yield password, new_dict
+		# print(pass_subs[0][0])
+		# yield pass_subs[0], (pass_subs[0], pass_subs[1], pattern)
 
-	def mapper_get_patterns(self, password, dictionary):
-		test =find_patterns(dictionary['password'][0], dictionary['subsequences'])
+		all_patterns = []
+		for pat in pattern:
+			all_patterns.append(pat[1])
 
-		dictionary['pattern'] = test
-		yield None, dictionary
+		yield all_patterns, 1
+
+
+	def reducer_on_patterns(self, pattern, count):
+		# reduce on the pattern but keep the substring data- maybe?
+
+		counts = sum(count)
+		patterns = list(pattern)
+
+		yield None, (patterns, counts)
+
+
 
 
 	def steps(self):
 		return [
 		  MRStep(mapper=self.mapper_on_passwords,
 				reducer=self.reducer_on_passwords),
-		  MRStep(mapper=self.mapper_get_patterns)]
+		  MRStep(mapper=self.mapper_get_patterns, 
+		  		reducer=self.reducer_on_patterns)]
 
 
 
 if __name__ == '__main__':
 	MRPasswords.run()
+
+
+
+	# MRStep(mapper=self.mapper_get_patterns,
+		  		# reducver=self.reducer_on_patterns)
