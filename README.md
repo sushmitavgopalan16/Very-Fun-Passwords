@@ -21,3 +21,11 @@ Looking for trends and insights from `berzerk0`'s [repository of leaked password
   * `cd /mnt/storage`
   * `sudo apt-get install python3-pip`
   * `sudo apt-get install git`
+
+#### Running MRJob on Dataproc
+
+The following command will run the MRJob on Google cloud dataproc:
+
+```
+python3 mr_substring.py -r dataproc --no-output --output-dir=gs://very_fun_passwords_output/output_substring --conf-path=./mrjob.conf gs://very_fun_passwords_input/all_password_pairs.txt
+```
