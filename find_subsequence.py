@@ -87,7 +87,7 @@ def substring(pass1, pass2):
 
 		is_alpha = check_alpha(substring)
 
-		return [substring, is_alpha, [[pass1, start_index1], [pass2, start_index2]]]
+		return [substring, is_alpha, [[l_pass1, start_index1], [l_pass2, start_index2]]]
 	else:
 		return None
 
