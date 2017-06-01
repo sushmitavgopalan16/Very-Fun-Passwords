@@ -22,21 +22,9 @@ def keyboard_walk(password):
             current_letter = next_letter
 
         else:
-            if start_index is not None:
-                if len(path) < 2:
-                    path = ''
-                    start_index = None
-                else:
-                    break
+            return None
 
-    if len(path) < 2:
-        path = ''
-        start_index = None
-
-    if path != '':
-        return path, start_index
-    else:
-        return None
+    return path, start_index
 
 def single_move_walks(password):
     global reverse_letters
@@ -58,9 +46,11 @@ def single_move_walks(password):
                 break
 
         # don't check passwords that are not entirely letters
-        if len(new_password) > 2 and new_password.isalpha():
+        if len(new_password) == len(password) and new_password.isalpha():
             if dictionary_word(new_password):
                 return [direction, new_password]
+
+    return None
 
 
 def letters_flip():
@@ -84,9 +74,10 @@ if __name__ == '__main__':
     #     for line in text_file.read().split():
     #         passwords.append(line)
 
-    passwords = ['ajkdg', 'mxhf', 'passw', 'ine']
+    passwords = ['qazxcv', '12345h', 'ewbr', 'otr']
 
     for password in passwords:
         # path, start_index = keyboard_walk(password, letters)
         # print(password, path, start_index)
         print(single_move_walks(password))
+
