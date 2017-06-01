@@ -57,7 +57,7 @@ def classify_num_string(num_string):
 			if date:
 				return ("date", num_string)
 			else:
-				return None
+				return ("numbers", num_string)
 	else:
 		date = find_date(num_string)
 		if date:
