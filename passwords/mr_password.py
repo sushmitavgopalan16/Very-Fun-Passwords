@@ -56,9 +56,9 @@ class MRPasswords(MRJob):
 	def reducer_on_patterns(self, pattern, count):
 		# reduce on None, keep the pattern and counts
 		counts = sum(count)
-		patterns = list(pattern)
+		#patterns = list(pattern)
 
-		yield None, (patterns, counts)
+		yield pattern, counts
 
 
 
@@ -67,7 +67,8 @@ class MRPasswords(MRJob):
 		return [
 		  MRStep(mapper=self.mapper_on_passwords,
 				reducer=self.reducer_on_passwords), 
-		  MRStep(mapper=self.mapper_get_patterns)]
+		  MRStep(mapper=self.mapper_get_patterns, 
+		  		reducer=self.reducer_on_patterns)]
 
 
 if __name__ == '__main__':

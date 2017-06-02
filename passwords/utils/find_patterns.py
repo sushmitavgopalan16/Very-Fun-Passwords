@@ -29,7 +29,7 @@ def find_patterns(password, subs):
 		if parse_string:
 			# avoiding duplicate entries 
 			limit = end_i
-			pattern.append((keep_sub[0], keep_sub[2]))
+			pattern.append(keep_sub[2])
 
 
 
