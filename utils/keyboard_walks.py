@@ -73,7 +73,7 @@ if __name__ == '__main__':
     #     for line in text_file.read().split():
     #         passwords.append(line)
 
-    passwords = ['qazxcv', '12345h', 'ewbr', 'otr']
+    passwords = ['shir', 'rie', 'nid', 'eyb', 'yse', 'aia']
 
     for password in passwords:
         # path, start_index = keyboard_walk(password, letters)
