@@ -1,13 +1,18 @@
 from mrjob.job import MRJob
 from mrjob.step import MRStep
 from mrjob.protocol import JSONValueProtocol
+import itertools
 
 # note - this gets the distribution for the PASSWORDS, not subsequences
 class MRTaskLengthDistribution(MRJob):
     INPUT_PROTOCOL = JSONValueProtocol
 
     def mapper(self, _, dictionary):
-        for password in dictionary['passwords']:
+        # don't count duplicates
+        k = dictionary['passwords']
+        k.sort()
+        unique_passwords = list(k for k,_ in itertools.groupby(k))
+        for password in unique_passwords:
             # throw away actual password
             yield str(len(password[0])),1
             #yield len(password[0]),1
