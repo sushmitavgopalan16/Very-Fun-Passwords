@@ -43,16 +43,14 @@ class MRPasswords(MRJob):
 	def mapper_get_patterns(self, password, sub):
 		
 		pattern = find_patterns(password, sub)
-		'''
+	
 		all_patterns = []
 		for pat in pattern:
-			all_patterns.append(pat[1])
+			all_patterns.append(pat)
 
 
 		yield all_patterns, 1
-		'''
 
-		yield pattern, 2
 
 
 	def reducer_on_patterns(self, pattern, count):
