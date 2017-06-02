@@ -9,7 +9,7 @@ class MRFemaleNames(MRJob):
   INPUT_PROTOCOL = JSONValueProtocol
 
   def mapper(self, _, dictionary):
-      if dictionary['female_name']:
+      if 'female_name' in dictionary:
           yield dictionary['female_name'],1
 
   def combiner(self, name, counts):
