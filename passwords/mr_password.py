@@ -52,7 +52,7 @@ class MRPasswords(MRJob):
 		yield all_patterns, 1
 		'''
 
-		yield pattern, 1
+		yield pattern, 2
 
 
 	def reducer_on_patterns(self, pattern, count):
