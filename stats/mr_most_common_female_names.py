@@ -10,7 +10,7 @@ class MRFemaleNames(MRJob):
 
   def mapper(self, _, dictionary):
       if 'female_name' in dictionary:
-          yield dictionary['female_name'],1
+          yield dictionary['subsequence'],1
 
   def combiner(self, name, counts):
       sum_counts = sum(counts)
