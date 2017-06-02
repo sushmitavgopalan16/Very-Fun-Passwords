@@ -63,7 +63,8 @@ class MRPasswords(MRJob):
 	def steps(self):
 		return [
 		  MRStep(mapper=self.mapper_on_passwords,
-				reducer=self.reducer_on_passwords)]
+				reducer=self.reducer_on_passwords), 
+		  MRStep(mapper=self.mapper_get_patterns)]
 
 
 if __name__ == '__main__':
