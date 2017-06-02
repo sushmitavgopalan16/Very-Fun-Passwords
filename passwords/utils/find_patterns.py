@@ -13,6 +13,7 @@ def find_patterns(password, subs):
 	pattern = []
 
 	# goes through each subsequence and gets the best pattern
+	'''
 	while parse_string:
 		parse_string = False
 		start_i = len(password) -1
@@ -30,6 +31,8 @@ def find_patterns(password, subs):
 			# avoiding duplicate entries 
 			limit = end_i
 			pattern.append((keep_sub[0], keep_sub[2]))
+	'''
+
 
 
 	return pattern
