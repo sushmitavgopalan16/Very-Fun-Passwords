@@ -38,10 +38,10 @@ class MRPasswords(MRJob):
 
 	def reducer_on_passwords(self, password, sub):
 		subsequences = list(sub)
-		yield None, (password, subsequences)
+		yield password, subsequences
 
-	def mapper_get_patterns(self, _, pass_subs):
-		pattern = find_patterns(pass_subs[0], pass_subs[1])
+	def mapper_get_patterns(self, password, sub):
+		pattern = find_patterns(password, subs)
 
 		all_patterns = []
 		for pat in pattern:
@@ -63,10 +63,12 @@ class MRPasswords(MRJob):
 	def steps(self):
 		return [
 		  MRStep(mapper=self.mapper_on_passwords,
-				reducer=self.reducer_on_passwords),
+				reducer=self.reducer_on_passwords)]
+
+		  '''
 		  MRStep(mapper=self.mapper_get_patterns, 
 		  		reducer=self.reducer_on_patterns)]
-
+			'''
 
 
 if __name__ == '__main__':
