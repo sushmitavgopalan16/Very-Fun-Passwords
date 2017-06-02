@@ -65,11 +65,6 @@ class MRPasswords(MRJob):
 		  MRStep(mapper=self.mapper_on_passwords,
 				reducer=self.reducer_on_passwords)]
 
-		  '''
-		  MRStep(mapper=self.mapper_get_patterns, 
-		  		reducer=self.reducer_on_patterns)]
-			'''
-
 
 if __name__ == '__main__':
 	MRPasswords.run()
