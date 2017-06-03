@@ -11,11 +11,16 @@ def all_possible_pairs(filename):
                     for second in second_file:
                         first = first.strip()
                         second = second.strip()
+                        if i2 > 10:
+                            break
                         if i2 > i1:
                             pair = first + ' ' + second + '\n'
                             output.write(pair)
                         i2 += 1
+
                 i1 += 1
+                if i1 >= 10:
+                    break
 
 if __name__ == '__main__':
     filename = sys.argv[1]
