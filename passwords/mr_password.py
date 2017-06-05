@@ -6,12 +6,14 @@ from utils.find_patterns import find_patterns
 class MRPasswords(MRJob):
 
 	INPUT_PROTOCOL = JSONValueProtocol
+	OUTPUT_PROTOCOL = JSONValueProtocol
 
 	def mapper_on_passwords(self, _, dictionary):
+		subs = set()
+		passwords = set()
+
 		for password in dictionary['passwords']:
-			if 'common_noun' in dictionary:
-				flag = 'proper noun'		
-			elif 'female_name' in dictionary:
+			if 'female_name' in dictionary:
 				flag = 'female name'
 			elif 'male_name' in dictionary:
 				flag = 'male name'
@@ -34,6 +36,10 @@ class MRPasswords(MRJob):
 			else:
 				flag = None
 
+			passwords.add((password[0], password[1]))
+			password = list(passwords)
+
+		for password in passwords:
 			yield password[0], (dictionary['subsequence'], password[1], flag)
 
 	def reducer_on_passwords(self, password, sub):
@@ -41,40 +47,25 @@ class MRPasswords(MRJob):
 		yield password, subsequences
 
 	def mapper_get_patterns(self, password, sub):
-		
+
 		pattern = find_patterns(password, sub)
-	
+
 		all_patterns = []
 		for pat in pattern:
 			all_patterns.append(pat)
 
+		if all_patterns:
+			pass_dict = {'password':password, 'pattern': all_patterns}
 
-		yield all_patterns, 1
-
-
-
-	def reducer_on_patterns(self, pattern, count):
-		# reduce on None, keep the pattern and counts
-		counts = sum(count)
-		#patterns = list(pattern)
-
-		yield pattern, counts
-
-
+			yield None, pass_dict
 
 
 	def steps(self):
 		return [
 		  MRStep(mapper=self.mapper_on_passwords,
-				reducer=self.reducer_on_passwords), 
-		  MRStep(mapper=self.mapper_get_patterns, 
-		  		reducer=self.reducer_on_patterns)]
+				reducer=self.reducer_on_passwords),
+		  MRStep(mapper=self.mapper_get_patterns)]
 
 
 if __name__ == '__main__':
 	MRPasswords.run()
-
-
-
-	# MRStep(mapper=self.mapper_get_patterns,
-		  		# reducver=self.reducer_on_patterns)
