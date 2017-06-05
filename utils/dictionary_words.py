@@ -64,7 +64,9 @@ def build_dictionary_from_file(filename):
 	dictionary = create_trie_node()
 	with open(filename, "r") as file:
 		for line in file:
-			add_word((line.split()[0].lower()),dictionary)
+            word = line.split()[0].lower()
+            if len(word) >3:
+                add_word(word,dictionary)
 	return dictionary
 
 # build dictionaries
