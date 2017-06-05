@@ -46,42 +46,44 @@ class MRPairSubstrings(MRJob):
 		yield sub, sub_dict
 
 	def mapper_find_words(self, sub, sub_dict):
+		
+		if sub[1].isalpha():
 
-		# check if dictionary word
-		if sub[1] is True or sub[1] is None:
-			result = dictionary_word(sub[0])
-			if result:
-				sub_dict['word'] = result
+			# check if dictionary word
+			if sub[1] is True or sub[1] is None:
+				result = dictionary_word(sub[0])
+				if result:
+					sub_dict['word'] = result
 
-		# check if last name
+			# check if last name
 
 			lastname = last_names(sub[0])
 			if lastname:
 				sub_dict['last_name'] = lastname
 
-		# check if female name
+			# check if female name
 
 			femalename = female_names(sub[0])
 			if femalename:
 				sub_dict['female_name'] = femalename
 
-		# check if male name
+			# check if male name
 
 			malename = male_names(sub[0])
 			if malename:
 				sub_dict['male_name'] = malename
 
-		# throw it to the number script
-		if sub[1] is False or sub[1] is None:
-			num_result = classify_num_string(sub[0])
-			if num_result:
-				sub_dict[num_result[0]] = num_result[1]
+		else:
+			# throw it to the number script
+			if sub[1] is False or sub[1] is None:
+				num_result = classify_num_string(sub[0])
+				if num_result:
+					sub_dict[num_result[0]] = num_result[1]
 
-		# throw it to the punctuation script
-		if sub[1] is None:
-			if is_punct(sub[0]):
-				sub_dict['punctuation'] = sub[0]
-
+			# throw it to the punctuation script
+			if sub[1] is None:
+				if is_punct(sub[0]):
+					sub_dict['punctuation'] = sub[0]
 		yield sub[0], sub_dict
 
 	def mapper_single_move_walks(self, sub, sub_dict):
