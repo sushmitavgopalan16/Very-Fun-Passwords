@@ -69,13 +69,10 @@ def build_dictionary_from_file(filename):
 
 # build dictionaries
 
-#COMMON NOUNS
-list_common_nouns = {x.name().split('.', 1)[0] for x in wn.all_synsets('n')}
-common_nouns = build_dictionary(list_common_nouns)
-
-# ALL DICTIONARY WORDS
-list_all_words = {x.name().split('.', 1)[0] for x in wn.all_synsets()}
-all_words = build_dictionary(list_all_words)
+# 10k most popular DICTIONARY WORDS
+#list_all_words = {x.name().split('.', 1)[0] for x in wn.all_synsets()}
+#all_words = build_dictionary(list_all_words)
+all_words = build_dictionary_from_file("./text_files/10k_words.txt")
 
 # LAST NAMES
 last_names_dict = build_dictionary_from_file("./text_files/last_names.txt")
@@ -90,9 +87,6 @@ def dictionary_word(word):
 	global all_words
 	return is_word(word,all_words)
 
-def common_noun(word):
-	global common_nouns
-	return is_word(word,common_nouns)
 
 def last_names(word):
 	global last_names_dict
