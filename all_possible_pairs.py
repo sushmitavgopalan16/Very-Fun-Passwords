@@ -11,7 +11,7 @@ def all_possible_pairs(filename):
                     for second in second_file:
                         first = first.strip()
                         second = second.strip()
-                        if i2 > 10:
+                        if i2 > 100:
                             break
                         if i2 > i1:
                             pair = first + ' ' + second + '\n'
@@ -19,7 +19,7 @@ def all_possible_pairs(filename):
                         i2 += 1
 
                 i1 += 1
-                if i1 >= 10:
+                if i1 >= 100:
                     break
 
 if __name__ == '__main__':

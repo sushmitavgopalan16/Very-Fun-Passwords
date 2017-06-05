@@ -22,7 +22,7 @@ def find_patterns(password, subs):
 					#print('things are good!')
 					if sub[2]:
 						start_i = sub[1]
-						end_i = sub[1] + len(sub[0]) -1 
+						end_i = sub[1] + len(sub[0]) -1
 						keep_sub = sub
 						parse_string = True
 
@@ -35,4 +35,3 @@ def find_patterns(password, subs):
 
 
 	return pattern
-

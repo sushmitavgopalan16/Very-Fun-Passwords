@@ -9,8 +9,8 @@ from nltk.corpus import wordnet as wn
 from utils.find_subsequence import substring
 from utils.keyboard_walks import keyboard_walk, single_move_walks
 from utils.num_patterns import classify_num_string
+from utils.find_punc import is_punct
 from utils.dictionary_words import dictionary_word
-from utils.dictionary_words import common_noun
 from utils.dictionary_words import last_names
 from utils.dictionary_words import female_names
 from utils.dictionary_words import male_names
@@ -54,11 +54,7 @@ class MRPairSubstrings(MRJob):
 			if result:
 				sub_dict['word'] = result
 
-			# check if common noun
-			if result:
-				commonnoun = common_noun(sub[0])
-				if commonnoun:
-					sub_dict['common_noun'] = commonnoun
+		# check if last name
 
 			lastname = last_names(sub[0])
 			if lastname:
@@ -76,16 +72,22 @@ class MRPairSubstrings(MRJob):
 			if malename:
 				sub_dict['male_name'] = malename
 
+		# throw it to the number script
 		if sub[1] is False or sub[1] is None:
 			num_result = classify_num_string(sub[0])
 			if num_result:
 				sub_dict[num_result[0]] = num_result[1]
+
+		# throw it to the punctuation script
+		if sub[1] is None:
+			if is_punct(sub[0]):
+				sub_dict['punctuation'] = sub[0]
+
 		yield sub[0], sub_dict
 
 	def mapper_single_move_walks(self, sub, sub_dict):
 		walk = single_move_walks(sub)
 		if walk:
-			# print(walk, walk[0], walk[1])
 			sub_dict['single_move_walks'] = [walk[0], walk[1]]
 		yield sub, sub_dict
 

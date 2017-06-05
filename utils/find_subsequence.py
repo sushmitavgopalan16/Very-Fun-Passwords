@@ -93,5 +93,5 @@ def substring(pass1, pass2):
 
 
 if __name__ == "__main__":
-	thing = substring('Chelsea', 'chelsea')
+	thing = substring('123testing', '123test')
 	print(thing)
