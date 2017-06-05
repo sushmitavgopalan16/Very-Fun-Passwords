@@ -9,11 +9,10 @@ import termios
 import fcntl
 import string
 import timeit
-from nltk.corpus import wordnet as wn
 
 def create_trie_node():
-    dictionary = {'count':0, 'final': False}
-    return dictionary
+	dictionary = {'count':0, 'final': False}
+	return dictionary
 
 def add_word(word,trie):
 	trie['count']+= 1
@@ -64,9 +63,9 @@ def build_dictionary_from_file(filename):
 	dictionary = create_trie_node()
 	with open(filename, "r") as file:
 		for line in file:
-            word = line.split()[0].lower()
-            if len(word) >3:
-                add_word(word,dictionary)
+			word = line.split()[0].lower()
+			if len(word) >3:
+				add_word(word,dictionary)
 	return dictionary
 
 # build dictionaries
@@ -89,11 +88,10 @@ def dictionary_word(word):
 	global all_words
 	return is_word(word,all_words)
 
-
 def last_names(word):
 	global last_names_dict
 	return is_word(word,last_names_dict)
-#
+
 def female_names(word):
 	global female_names_dict
 	return is_word(word,female_names_dict)

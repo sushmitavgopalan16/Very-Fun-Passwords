@@ -4,7 +4,6 @@ import sys
 from mrjob.job import MRJob
 from mrjob.step import MRStep
 from mrjob.protocol import JSONValueProtocol
-from nltk.corpus import wordnet as wn
 
 from utils.find_subsequence import substring
 from utils.keyboard_walks import keyboard_walk, single_move_walks
