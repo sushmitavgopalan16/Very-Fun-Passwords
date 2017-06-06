@@ -1,11 +1,14 @@
-from utils.dictionary_words import dictionary_word
+from utils.dictionary_words import dictionary_word, female_names, male_names, last_names
 from utils.num_patterns import classify_num_string
+from utils.find_punc import is_punct
 
 def find_patterns(password, subs):
 	# password = name of password
 	# sub = tuple(name, starting index, flag)
 	parse_string = True
 	substrings = sorted(subs, key=lambda x: x[1])
+	pattern_beg = None
+	pattern_end = None
 
 
 	end_i = 0
@@ -52,36 +55,55 @@ def classify_excess(password, pattern, pattern_beg, pattern_end):
 			# add the check for type of sequence
 			num_class = classify_num_string(excess_beg)
 			if num_class:
-				pattern.insert(0, (num_class[1], num_class[0]))
+				if num_class == 'sequence' and 'sequence' in pattern:
+					whole_password_class = classify_num_string(password)
+					if whole_password_class == 'sequence':
+						pattern = [(password, 'sequence')]
+				else:
+					pattern.insert(0, (num_class[1], num_class[0]))
+
 	elif excess_beg.isalpha():
 		# add the check for type of word
 		if dictionary_word(excess_beg):
-			pattern.insert(0, (excess_beg), 'word'))
-		elif female_name(excess_beg):
-			pattern.insert(0, (excess_beg), 'female name'))
-		elif male_name(excess_beg):
-			pattern.insert(0, (excess_beg), 'male name'))
-		elif last_name(excess_beg):
-			pattern.insert(0, (excess_beg), 'last name'))
+			pattern.insert(0, (excess_beg, 'word'))
+		elif female_names(excess_beg):
+			pattern.insert(0, (excess_beg, 'female name'))
+		elif male_names(excess_beg):
+			pattern.insert(0, (excess_beg, 'male name'))
+		elif last_names(excess_beg):
+			pattern.insert(0, (excess_beg, 'last name'))
 
-	# check excess_end
-	if excess_end.isnumeric():
-		if len(excess_end) == 1:
-			pattern.append((str(excess_end), 'single number'))
-		else:
-			# add the check for type of sequence
-			num_class = classify_num_string(excess_end)
-			if num_class:
-				pattern.append((num_class[1], num_class[0]))
-	elif excess_end.isalpha():
-		# add the check for type of word
-		if dictionary_word(excess_end):
-			pattern.append((excess_end), 'word'))
-		elif female_name(excess_end):
-			pattern.append((excess_end), 'female name'))
-		elif male_name(excess_end):
-			pattern.append((excess_end), 'male name'))
-		elif last_name(excess_end):
-			pattern.append((excess_end), 'last name'))
+	elif is_punct(excess_beg) and len(excess_beg) > 0:
+		pattern.insert(0, (excess_beg, 'punctuation'))
+
+	if pattern_end is not None:
+		# check excess_end
+		if excess_end.isnumeric():
+			if len(excess_end) == 1:
+				pattern.append((str(excess_end), 'single number'))
+			else:
+				# add the check for type of sequence
+				num_class = classify_num_string(excess_end)
+				if num_class:
+					if num_class == 'sequence' and 'sequence' in pattern:
+						whole_password_class = classify_num_string(password)
+						if whole_password_class == 'sequence':
+							pattern = [(password, 'sequence')]
+					else:
+						pattern.append((num_class[1], num_class[0]))
+
+		elif excess_end.isalpha():
+			# add the check for type of word
+			if dictionary_word(excess_end):
+				pattern.append((excess_end, 'word'))
+			elif female_names(excess_end):
+				pattern.append((excess_end, 'female name'))
+			elif male_names(excess_end):
+				pattern.append((excess_end, 'male name'))
+			elif last_names(excess_end):
+				pattern.append((excess_end, 'last name'))
+
+		elif is_punct(excess_end) and len(excess_end) > 0:
+			pattern.append((excess_beg, 'punctuation'))
 
 	return pattern

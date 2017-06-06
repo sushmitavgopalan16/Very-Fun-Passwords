@@ -33,6 +33,8 @@ class MRPasswords(MRJob):
 				flag = 'keyboard walk'
 			elif 'single_move_walks' in dictionary:
 				flag = 'single move w'
+			elif 'punctuation' in dictionary:
+				flag = 'punctuation'
 			else:
 				flag = None
 
@@ -44,6 +46,7 @@ class MRPasswords(MRJob):
 
 	def reducer_on_passwords(self, password, sub):
 		subsequences = list(sub)
+		print(password, subsequences)
 		yield password, subsequences
 
 	def mapper_get_patterns(self, password, sub):
@@ -62,9 +65,9 @@ class MRPasswords(MRJob):
 
 	def steps(self):
 		return [
-		  MRStep(mapper=self.mapper_on_passwords,
+			MRStep(mapper=self.mapper_on_passwords,
 				reducer=self.reducer_on_passwords),
-		  MRStep(mapper=self.mapper_get_patterns)]
+			MRStep(mapper=self.mapper_get_patterns)]
 
 
 if __name__ == '__main__':
