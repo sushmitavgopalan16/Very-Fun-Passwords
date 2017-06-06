@@ -44,7 +44,6 @@ class MRPasswords(MRJob):
 
 	def reducer_on_passwords(self, password, sub):
 		subsequences = list(sub)
-		print(password, subsequences)
 		yield password, subsequences
 
 	def mapper_get_patterns(self, password, sub):
