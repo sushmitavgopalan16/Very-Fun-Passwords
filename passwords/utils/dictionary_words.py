@@ -1,0 +1,99 @@
+# Go over list of passwords and generate a boolean that is True
+# if some substring of >= 3 characters of the password is a dictionary word\
+# trie implementation testing
+import os
+import sys
+from sys import exit
+import tty
+import termios
+import fcntl
+import string
+import timeit
+
+def create_trie_node():
+	dictionary = {'count':0, 'final': False}
+	return dictionary
+
+def add_word(word,trie):
+	trie['count']+= 1
+	if len(word) == 0:
+		trie['final'] = True
+		return
+
+	character = word[0]
+	rest_of_word = word[1:]
+
+	if character in trie.keys():
+		add_word(rest_of_word,trie[character])
+	else:
+		# create new node
+		trie[character] = create_trie_node()
+		# add the rest of the word to this node
+		add_word(rest_of_word,trie[character])
+
+def is_word(word, trie):
+	rv = False
+	# base case length = 0
+	if len(word) == 0:
+		return rv
+
+	if word[0] not in trie.keys():
+		return rv
+
+	if len(word) == 1:
+		if trie[word]['final']:
+			rv = True
+			return rv
+		else:
+			return rv
+
+	# recursive call
+	if len(word)>1:
+		character = word[0]
+		rest_of_word = word[1:]
+		return is_word(rest_of_word,trie[character])
+
+def build_dictionary(word_list):
+	dictionary = create_trie_node()
+	for word in word_list:
+		add_word(word,dictionary)
+	return dictionary
+
+def build_dictionary_from_file(filename):
+	dictionary = create_trie_node()
+	with open(filename, "r") as file:
+		for line in file:
+			word = line.split()[0].lower()
+			if len(word) >3:
+				add_word(word,dictionary)
+	return dictionary
+
+# build dictionaries
+
+# 10k most popular DICTIONARY WORDS
+all_words = build_dictionary_from_file("./text_files/10k_words.txt")
+
+# LAST NAMES
+last_names_dict = build_dictionary_from_file("./text_files/last_names.txt")
+#
+# FEMALE NAMES
+female_names_dict = build_dictionary_from_file("./text_files/female_first_names.txt")
+
+# MALE NAMES
+male_names_dict = build_dictionary_from_file("./text_files/male_first_names.txt")
+
+def dictionary_word(word):
+	global all_words
+	return is_word(word,all_words)
+
+def last_names(word):
+	global last_names_dict
+	return is_word(word,last_names_dict)
+
+def female_names(word):
+	global female_names_dict
+	return is_word(word,female_names_dict)
+
+def male_names(word):
+	global male_names_dict
+	return is_word(word,male_names_dict)
