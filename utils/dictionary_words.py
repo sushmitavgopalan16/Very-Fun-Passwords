@@ -1,4 +1,3 @@
-# Go over list of passwords and generate a boolean that is True
 import os
 import sys
 from sys import exit
@@ -10,17 +9,17 @@ import timeit
 
 def create_trie_node():
 	'''
-    	Creates a node with count initialized to 1
-    	and 'final' initialized to False
-    	'''    
+	Creates a node with count initialized to 1
+	and 'final' initialized to False
+	'''
 	dictionary = {'count':0, 'final': False}
 	return dictionary
 
 def add_word(word,trie):
 	'''
-	Takes a word and a trie and 
-	adds the word recursively to the trie 
-    	'''
+	Takes a word and a trie and
+	adds the word recursively to the trie
+    '''
 	trie['count']+= 1
 	if len(word) == 0:
 		trie['final'] = True
@@ -39,9 +38,9 @@ def add_word(word,trie):
 
 def is_word(word, trie):
    	 '''
-    	Takes a word and a trie and returns True if the word
-    	exists in the given trie and False, otherwise.
-        '''	
+	Takes a word and a trie and returns True if the word
+	exists in the given trie and False, otherwise.
+    '''
 	rv = False
 	# base case length = 0
 	if len(word) == 0:
@@ -66,7 +65,7 @@ def is_word(word, trie):
 def build_dictionary(word_list):
 	'''
 	Returns a large trie containing all the words
-	in the a given list 
+	in the a given list
 	'''
 	dictionary = create_trie_node()
 	for word in word_list:
@@ -103,7 +102,7 @@ female_names_dict = build_dictionary_from_file("./text_files/female_first_names.
 male_names_dict = build_dictionary_from_file("./text_files/male_first_names.txt")
 
 def dictionary_word(word):
-	''' 
+	'''
 	returns True if the word belongs to our dictionary
 	of dictionary words and False, otherwise
 	'''
@@ -111,15 +110,15 @@ def dictionary_word(word):
 	return is_word(word,all_words)
 
 def last_names(word):
-	''' 
+	'''
 	returns True if the word belongs to our dictionary
 	of last names and False, otherwise
-	'''	
+	'''
 	global last_names_dict
 	return is_word(word,last_names_dict)
 
 def female_names(word):
-	''' 
+	'''
 	returns True if the word belongs to our dictionary
 	of female names and False, otherwise
 	'''
@@ -127,7 +126,7 @@ def female_names(word):
 	return is_word(word,female_names_dict)
 
 def male_names(word):
-	''' 
+	'''
 	returns True if the word belongs to our dictionary
 	of male names and False, otherwise
 	'''
