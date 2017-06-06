@@ -11,7 +11,6 @@ class MRTaskLengthDistribution(MRJob):
         # don't count duplicates
         k = dictionary['password']
         yield str(len(k)),1
-        #yield len(password[0]),1
 
     def combiner(self,name,counts):
         sum_counts = sum(counts)

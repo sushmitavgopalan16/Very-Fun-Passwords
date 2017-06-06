@@ -17,5 +17,6 @@ class MRTask1(MRJob):
     def reducer(self, name, counts):
         sum_counts = sum(counts)
         yield name, sum_counts
+        
 if __name__ == '__main__':
     MRTask1.run()
