@@ -7,7 +7,6 @@ class MRPasswords(MRJob):
 	INPUT_PROTOCOL = JSONValueProtocol
 
 	def mapper(self, _, dictionary):
-		#print(dictionary['pattern'])
 		pattern = dictionary['pattern']
 		all_patterns = []
 
