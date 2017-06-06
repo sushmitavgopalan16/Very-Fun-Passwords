@@ -12,14 +12,14 @@ class MRPasswords(MRJob):
 		passwords = set()
 
 		for password in dictionary['passwords']:
-			if 'female_name' in dictionary:
-				flag = 'female name'
-			elif 'male_name' in dictionary:
+			if 'male_name' in dictionary:
 				flag = 'male name'
-			elif 'last_name' in dictionary:
-				flag = 'last name'
+			elif 'female_name' in dictionary:
+				flag = 'female name'
 			elif 'word' in dictionary:
 				flag = 'word'
+			elif 'last_name' in dictionary:
+				flag = 'last name'
 			elif 'sequence' in dictionary:
 				flag = 'sequence'
 			elif 'date' in dictionary:
