@@ -1,4 +1,7 @@
 def check_similars(substring, password):
+	'''
+	Check to make the substring is found in the password
+	'''
 	for i, char in enumerate(substring):
 		if char != password[i]:
 			return False
@@ -7,6 +10,9 @@ def check_similars(substring, password):
 
 
 def get_start_index(substring, password):
+	'''
+	Fetch the index at which the substring starts in the password
+	'''
 	if len(substring) == 0:
 		return
 	for i, char in enumerate(password):
@@ -17,6 +23,9 @@ def get_start_index(substring, password):
 	return None
 
 def check_alpha(substring):
+	'''
+	Check whether substring is only alphabetical characters.
+	'''
 	is_alpha = None
 	if substring.isalpha():
 		is_alpha = True
@@ -27,6 +36,12 @@ def check_alpha(substring):
 
 
 def substring(pass1, pass2):
+	'''
+	Find longest common substring between the two passwords.
+	Input- pass1: string, pass2: string
+	Output- list of substring, boolean of whether only letters, the first
+	and second passwords and the index at which the substring starts
+	'''
 	l_pass1 = pass1.lower()
 	l_pass2 = pass2.lower()
 
