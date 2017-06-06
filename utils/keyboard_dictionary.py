@@ -1,3 +1,7 @@
+# This file contains a dictionary giving a key on the keyboard and then the keys
+# that are found in every direction relative to the key: North (N), East (E), South (S),
+# West (W), Northeast (M), Northwest (B), Southeast (D), Southwest (A)
+
 letters = {
     'q': {
         '1':'n', 'w':'e', 'a':'s', '2':'m', '`':'b', 's':'d',
