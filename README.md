@@ -50,9 +50,17 @@ python3 mr_password.py -r dataproc --no-output --output-dir=gs://very_fun_passwo
 
 This output can again be combined using the same `gen_output.py` and `gsutil cp` steps as found above. The copied file can then be directly accessed from your Google Storage GUI.
 
+##### Counting the patterns found
+
+The output from the above step can be processed through the following script in order to give a count of the total number of passwords that subscribe to each pattern:
+
+```
+python3 mr_get_pattern.py -r dataproc --no-output --output-dir=gs://very_fun_passwords_final/patterns --conf-path=./mrjob.conf gs://very_fun_passwords_input/mr_password_output.txt
+```
+
 ##### Getting interesting stats
 
-The output from created in the above step can be fed directly into any of the scripts found in the `stats/` folder. These scripts will calculate distributions such as number of passwords of each length, counts of how many of each type of subsequences were found in all passwords present in the data set, and the most common female names/male names/words/single numbers used in passwords.
+The output from created in the 'Finding password patterns' step can be fed directly into any of the scripts found in the `stats/` folder. These scripts will calculate distributions such as number of passwords of each length, counts of how many of each type of subsequences were found in all passwords present in the data set, and the most common female names/male names/words/single numbers used in passwords.
 
 The following is an example command that can be run using `mr_simplecounts` within the `stats/` folder:
 
