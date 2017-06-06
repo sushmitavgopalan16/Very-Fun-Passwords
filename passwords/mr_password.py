@@ -9,6 +9,18 @@ class MRPasswords(MRJob):
 	OUTPUT_PROTOCOL = JSONValueProtocol
 
 	def mapper_on_passwords(self, _, dictionary):
+		'''
+		Mapper- takes in dictionary produced by mr_substring, creates new
+		dictionary based on password
+		Inputs- dictionary: dictionary from mr_substring 
+		Outputs- password[0]: the name of the password that we're reducing on 
+				 tuple of subsequence information:
+				 	-At index[0] you find the name of the subsequence 
+				 	-At index[1] you find the starting index of the subsequence 
+				 	in relation to the password
+				 	-At index[3] you find the 'flag' of the subsequence which 
+				 	tells you if the subsequence is a word/name/number sequence etc. 
+		'''
 		passwords = set()
 
 		for password in dictionary['passwords']:
@@ -43,10 +55,27 @@ class MRPasswords(MRJob):
 			yield password[0], (dictionary['subsequence'], password[1], flag)
 
 	def reducer_on_passwords(self, password, sub):
+		'''
+		Reducer- Reduces on the name of the password 
+		Inputs- password: Name of the password
+				sub: substring information as described above
+		Outputs- password: Name of the password
+				 subsequences: list of subsequences and relevant information that
+				 pertain to that password 
+
+		'''
 		subsequences = list(sub)
 		yield password, subsequences
 
-	def mapper_get_patterns(self, password, sub):
+	def mapper_get_patterns(self, password, sub):		
+		'''
+		Mapper #2- Finds and yields specific pattern for each password 
+		Inputs- password: name of the password
+				sub: list of subsequences and information contained within each
+				specific password 
+		Outputs- pass_dict: a dictionary containing the password and the pattern
+				 discovered within the password 
+		'''
 		pattern = find_patterns(password, sub)
 
 		if len(pattern) > 0:
