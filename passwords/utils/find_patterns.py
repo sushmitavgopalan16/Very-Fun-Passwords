@@ -4,17 +4,17 @@ from utils.find_punc import is_punct
 
 def find_patterns(password, subs):
 	'''
-	Finds the patterns of subsequence types in each password 
-	Inputs- password: name of the password 
-			subs: list of subsequences included in the password 
+	Finds the patterns of subsequence types in each password
+	Inputs- password: name of the password
+			subs: list of subsequences included in the password
 			along with relevant information about each subsequence
-				-at index[0] you find the name of the subsequence 
-				-at index[1] you find the starting index of the subsequence 
+				-at index[0] you find the name of the subsequence
+				-at index[1] you find the starting index of the subsequence
 				in the password
-				-at index[2] you find the flag of that subsequence 
+				-at index[2] you find the flag of that subsequence
 	Outputs- pattern: a list of tuples.
-				-at index[0] you find the name of the subsequence 
-				-at index[1] you find the flag of that subsequence 
+				-at index[0] you find the name of the subsequence
+				-at index[1] you find the flag of that subsequence
 	'''
 	parse_string = True
 	substrings = sorted(subs, key=lambda x: x[1])
@@ -25,7 +25,7 @@ def find_patterns(password, subs):
 	starting_sub = None
 	limit = -1
 	pattern = []
-	
+
 	# goes through each subsequence and gets the best pattern
 	while parse_string:
 		parse_string = False
@@ -35,7 +35,7 @@ def find_patterns(password, subs):
 				if sub[1] > limit and sub[1] <= start_i and (sub[1] + len(sub[0])-1) > end_i:
 					if sub[2]:
 						start_i = sub[1]
-						end_i = sub[1] + len(sub[0]) -1 
+						end_i = sub[1] + len(sub[0]) -1
 						keep_sub = sub
 						parse_string = True
 
@@ -54,6 +54,17 @@ def find_patterns(password, subs):
 	return pattern
 
 def classify_excess(password, pattern, pattern_beg, pattern_end):
+	'''
+	Attempts to classify the excess characters at the beginning and end of the
+	passwords.
+	Inputs- password: name of the password
+			pattern: list of subsequences already identified to be a part of the pattern
+			pattern_beg: the index at which the password begins to be classified
+			pattern_end: the index at which the password stops being classified
+	Outputs- pattern: a list of tuples.
+				-at index[0] you find the name of the subsequence
+				-at index[1] you find the flag of that subsequence
+	'''
 	excess_beg = password[:pattern_beg]
 	excess_end = password[pattern_end:]
 
@@ -117,4 +128,3 @@ def classify_excess(password, pattern, pattern_beg, pattern_end):
 			pattern.append((excess_beg, 'punctuation'))
 
 	return pattern
-

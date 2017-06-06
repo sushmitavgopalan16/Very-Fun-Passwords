@@ -9,10 +9,9 @@ class MRFemaleNames(MRJob):
   INPUT_PROTOCOL = JSONValueProtocol
 
   def mapper(self, _, dictionary):
-    if 'female_name' in dictionary:
-        n = len(dictionary['passwords'])
-        yield dictionary['subsequence'],n
-
+        for pattern_list in dictionary['pattern']:
+            if  pattern_list[1] == "female name":
+                yield pattern_list[0],1
 
   def combiner(self, name, counts):
       sum_counts = sum(counts)

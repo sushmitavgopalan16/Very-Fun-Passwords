@@ -1,3 +1,5 @@
+# This file collects output files from Google Storage and then copies them to
+# Google Compute Engine and then contatenates them.
 import os
 
 cat_prefix = ''
