@@ -5,10 +5,9 @@ Looking for trends and insights from `berzerk0`'s [repository of leaked password
 ### Useful Commands
 
 #### Connecting to Google Cloud
-* Sushmita logs in and makes VM instance
-  * make sure there is no squiggly line next to the vm instance
-* We take note of external IP address and run this:
-  * `ssh -i ~/.ssh/mapreduce sushmitavgopalan@ExTERNAL-IP`
+* Make a VM instance
+* Take note of external IP address and run this:
+  * `ssh -i ~/.ssh/mapreduce username@ExTERNAL-IP`
   * `sudo mkdir /mnt/storage`
   * `sudo mount /dev/sdb /mnt/storage`
   * `sudo chmod 777 /mnt/storage`
@@ -16,6 +15,15 @@ Looking for trends and insights from `berzerk0`'s [repository of leaked password
   * `sudo apt-get install python3-pip`
   * `sudo apt-get install git`
 
+#### Creating pairs of passwords on Compute Engine
+Within the VM instance, you will create all possible pairs of the passwords found in your data set, by running the following command, with the appropriate name and location of your data and the final number indicating the number of desired threads:
+```
+python3 all_possible_pairs_threading.py ./../megatools-1.9.98/Top95Thousand-probable.txt 4
+```
+The output of this file should then be moved into Google Store using:
+```
+gsutil cp password_pairs.txt gs://very_fun_passwords_input/password_pairs.txt
+```
 #### Running MRJob on Dataproc
 
 ##### Getting substrings and classifications
