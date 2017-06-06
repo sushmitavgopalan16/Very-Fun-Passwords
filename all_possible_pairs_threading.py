@@ -2,7 +2,13 @@ import sys
 import threading
 import itertools
 
-def all_possible_pairs(filename, start, end, ID):
+def all_possible_pairs(filename, start, end):
+	'''
+	Opens 2 copies of passwords file and creates all possible pairs 
+	Inputs- filename: name of file
+			start: index where specific thread should begin in file
+			end: index where specific thread should end in file 
+	'''
 	output_file = 'password_pairs_{}.txt'.format(ID)
 	with open((output_file), "w") as output:
 		with open(filename, "r") as first_file:
@@ -23,8 +29,8 @@ if __name__ == '__main__':
 	filename = sys.argv[1]
 	num_threads = int(sys.argv[2])
 
+	# splitting file into equal-ish parts for threading 
 	num_lines = sum(1 for line in open(filename))
-
 	remainder=num_lines%num_threads
 	integer = num_lines/num_threads
 
@@ -37,12 +43,13 @@ if __name__ == '__main__':
 	start = 0 
 	threads = []
 
+	#creating and running pairs function in multiple threads 
 	for i, num in enumerate(splits):
 		if i != 0:
 			start = int(end) 
 		end = int(start + num)
 
-		t = threading.Thread(target=all_possible_pairs, args = (filename, start, end, i))
+		t = threading.Thread(target=all_possible_pairs, args = (filename, start, end))
 		threads.append(t)
 		t.start()
 
