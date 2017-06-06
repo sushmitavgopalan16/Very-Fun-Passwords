@@ -9,8 +9,9 @@ class MRCommonSubsequences(MRJob):
   INPUT_PROTOCOL = JSONValueProtocol
 
   def mapper(self, _, dictionary):
-      no_of_passwords = len(dictionary['passwords'])
-      yield dictionary['subsequence'],no_of_passwords
+      #{"password": "14081408", "pattern": [["140", "numbers"], ["814", "date"], ["08", "numbers"]]}
+      for pattern_list in dictionary['pattern']:
+          yield pattern_list[0],1
 
   def combiner(self, name, counts):
       sum_counts = sum(counts)
