@@ -2,7 +2,7 @@ import sys
 import threading
 import itertools
 
-def all_possible_pairs(filename, start, end):
+def all_possible_pairs(filename, start, end, ID):
 	'''
 	Opens 2 copies of passwords file and creates all possible pairs 
 	Inputs- filename: name of file
@@ -49,7 +49,7 @@ if __name__ == '__main__':
 			start = int(end) 
 		end = int(start + num)
 
-		t = threading.Thread(target=all_possible_pairs, args = (filename, start, end))
+		t = threading.Thread(target=all_possible_pairs, args = (filename, start, end, i))
 		threads.append(t)
 		t.start()
 
