@@ -1,11 +1,18 @@
-# ':n', ':e', ':s', ':w', ':m', ':b', ':d', ':a', ':N', ':E', ':S', ':W', ':M', ':B', ':D', ':A'
-# N, E, S, W, M(NE), B(NW), D(SE), A(SW)
-
 import sys
 from utils.keyboard_dictionary import *
 from utils.dictionary_words import dictionary_word
 
 def keyboard_walk(password):
+    '''
+    Uses the letters dictionary to check if an inputted password is a keyboard walk
+    Checks if the next letter in the password is in a key in any direction immediately
+    around the current letter, if so, continues to check until it reaches the end of
+    the string or it cannot find the next letter in the current letter's dictionary.
+    If the next letter is in the current letter's dictionary, the direction needed to move
+    between the current and next letter is added to the path.
+    Inputs- password: string
+    Outputs- path: string, start_index: int
+    '''
     global letters
 
     path = ''
@@ -26,6 +33,15 @@ def keyboard_walk(password):
     return path, start_index
 
 def single_move_walks(password):
+    '''
+    Uses the reversed letters dictionary to check if an inputted password is a
+    single move walk. Each letter of the input password is moved in a specific
+    direction and then the script checks whether the new collection of letters
+    is a word. This is repeated for each direction.
+    Inputs- password: string
+    Outputs- list of direction: string, new_password: string
+    '''
+
     global reverse_letters
     directions = ['n', 'e', 's', 'w', 'm', 'b', 'd', 'a']
 
@@ -53,6 +69,12 @@ def single_move_walks(password):
 
 
 def letters_flip():
+    '''
+    This function flips the orientation of the letters dictionary so that it reflects
+    the directons as the keys and the keys as the values
+    Input- None
+    Output- reverse_letters: dictionary
+    '''
     global letters
     reverse_letters = {}
 
@@ -62,20 +84,3 @@ def letters_flip():
             reverse_letters[keys][value] = key
 
     return reverse_letters
-
-
-
-if __name__ == '__main__':
-    # filename = sys.argv[1]
-    passwords = []
-
-    # with open(filename, "r") as text_file:
-    #     for line in text_file.read().split():
-    #         passwords.append(line)
-
-    passwords = ['shir', 'rie', 'nid', 'eyb', 'yse', 'aia']
-
-    for password in passwords:
-        # path, start_index = keyboard_walk(password, letters)
-        # print(password, path, start_index)
-        print(single_move_walks(password))

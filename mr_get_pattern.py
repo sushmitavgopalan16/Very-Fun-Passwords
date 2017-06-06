@@ -6,11 +6,14 @@ class MRPasswords(MRJob):
 
 	INPUT_PROTOCOL = JSONValueProtocol
 
-
 	def mapper(self, _, dictionary):
 		pattern = dictionary['pattern']
+		all_patterns = []
 
-		yield pattern[0][1], 1
+		for single_pat in pattern:
+			all_patterns.append(single_pat[1])
+
+		yield all_patterns, 1
 
 
 	def reducer(self, pattern, count):

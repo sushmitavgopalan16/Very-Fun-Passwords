@@ -6,6 +6,7 @@ def find_date(num_string):
 	for i, format in enumerate(date_fmts):
 		try:
 			date = datetime.datetime.strptime(num_string, format)
+			print(date)
 			if '%b' in format:
 				is_date = True
 				break
@@ -64,3 +65,19 @@ def classify_num_string(num_string):
 			return ("date", num_string)
 		else:
 			return None
+
+
+
+if __name__ == "__main__":
+	s= '31'
+	test = classify_num_string(s)
+	print(test)
+
+
+
+
+
+
+
+
+
