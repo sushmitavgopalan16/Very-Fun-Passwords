@@ -1,7 +1,6 @@
 from mrjob.job import MRJob
 from mrjob.step import MRStep
 from mrjob.protocol import JSONValueProtocol
-import itertools
 
 class MRTask1(MRJob):
 
