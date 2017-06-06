@@ -19,7 +19,7 @@ def add_word(word,trie):
 	'''
 	Takes a word and a trie and
 	adds the word recursively to the trie
-    '''
+	'''
 	trie['count']+= 1
 	if len(word) == 0:
 		trie['final'] = True
@@ -37,10 +37,10 @@ def add_word(word,trie):
 		add_word(rest_of_word,trie[character])
 
 def is_word(word, trie):
-   	 '''
+	'''
 	Takes a word and a trie and returns True if the word
 	exists in the given trie and False, otherwise.
-    '''
+	'''
 	rv = False
 	# base case length = 0
 	if len(word) == 0:
