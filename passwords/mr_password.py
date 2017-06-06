@@ -47,10 +47,9 @@ class MRPasswords(MRJob):
 		yield password, subsequences
 
 	def mapper_get_patterns(self, password, sub):
-
 		pattern = find_patterns(password, sub)
 
-		if pattern:
+		if len(pattern) > 0:
 			pass_dict = {'password':password, 'pattern': pattern}
 
 			yield None, pass_dict
