@@ -38,7 +38,6 @@ class MRPasswords(MRJob):
 				flag = None
 
 			passwords.add((password[0], password[1]))
-			password = list(passwords)
 
 		for password in passwords:
 			yield password[0], (dictionary['subsequence'], password[1], flag)
@@ -52,12 +51,8 @@ class MRPasswords(MRJob):
 
 		pattern = find_patterns(password, sub)
 
-		all_patterns = []
-		for pat in pattern:
-			all_patterns.append(pat)
-
-		if all_patterns:
-			pass_dict = {'password':password, 'pattern': all_patterns}
+		if pattern:
+			pass_dict = {'password':password, 'pattern': pattern}
 
 			yield None, pass_dict
 
