@@ -9,7 +9,6 @@ class MRPasswords(MRJob):
 	OUTPUT_PROTOCOL = JSONValueProtocol
 
 	def mapper_on_passwords(self, _, dictionary):
-		subs = set()
 		passwords = set()
 
 		for password in dictionary['passwords']:
