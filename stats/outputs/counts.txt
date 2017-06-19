@@ -1,0 +1,12 @@
+"date"	2516
+"female name"	7234
+"keyboard walk"	5789
+"last name"	5817
+"male name"	7214
+"numbers"	2292
+"punctuation"	26
+"repitition"	1323
+"sequence"	4421
+"single move w"	371
+"single number"	4569
+"word"	34009
