@@ -52,9 +52,7 @@ def is_word(word, trie):
 	if len(word) == 1:
 		if trie[word]['final']:
 			rv = True
-			return rv
-		else:
-			return rv
+		return rv
 
 	# recursive call
 	if len(word)>1:
